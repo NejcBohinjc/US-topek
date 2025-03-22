@@ -35,17 +35,25 @@ class Top:
 
     def update_image(self):
         # Rotate the image
-        self.image = pygame.transform.rotozoom(self.original_image, -self.angle, 1)
+        self.image = pygame.transform.rotozoom(self.original_image, self.angle, 1)
         
         # Update position to keep it centered
         self.rect = self.image.get_rect(center=self.rect.center)
     
     def rotate(self,direction):
         rotation_speed = 2
+                
         if direction == "left":
-            self.angle -= rotation_speed
-        elif direction == "right":
             self.angle += rotation_speed
+        elif direction == "right":
+            self.angle -= rotation_speed
+            
+        #kot gre lahko čez 360 stopinj, ali v minus, kar ni vredu.
+
+        self.angle %= 360
+
+
+
         self.update_image()
         
     

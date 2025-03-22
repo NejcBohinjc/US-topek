@@ -27,13 +27,15 @@ while True:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         top.rotate("left")
+        print(top.angle)
     if keys[pygame.K_RIGHT]:
         top.rotate("right")
+        print(top.angle)
     
 
     screen.fill(background_colour) #sproti nam riše ozadje in nam zato briše sled topa
     top.draw(screen)
-    bullet1.draw(screen) #narišemo top + cev
+    #bullet1.draw(screen)
     pygame.display.flip()
 
     clock.tick(60)
