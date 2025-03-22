@@ -1,5 +1,6 @@
 import pygame
 import math
+import bullet_script
 
 class Top:
     def __init__(self,health,box_color,box_hitbox_width,box_hitbox_height,box_x,box_y,screen_width,screen_height):
@@ -55,6 +56,7 @@ class Top:
 
 
         self.update_image()
+    
         
     
     
