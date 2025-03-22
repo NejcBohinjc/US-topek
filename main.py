@@ -17,9 +17,9 @@ pygame.display.flip()
 #vsi objekti v igri
 top = topek_script.Top(100,"#000000",100,50,width/2,height/2,width,height)
 bullet1 = bullet_script.Bullet(width/2,height/2,5,"#452563")
+running = True
 
-
-while True:
+while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -27,15 +27,15 @@ while True:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         top.rotate("left")
-        print(top.angle)
+        #print(top.angle)
     if keys[pygame.K_RIGHT]:
         top.rotate("right")
-        print(top.angle)
+        #print(top.angle)
     
 
     screen.fill(background_colour) #sproti nam riše ozadje in nam zato briše sled topa
     top.draw(screen)
-    #bullet1.draw(screen)
+    bullet1.draw(screen)
     pygame.display.flip()
 
     clock.tick(60)
