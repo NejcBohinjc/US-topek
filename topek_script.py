@@ -28,11 +28,17 @@ class Top:
         self.image = self.original_image
         self.rect = self.image.get_rect(center=(self.box_x, self.box_y))
 
+        self.bullets = list() #moramo narediti list, da se nam bulleti ne overwritajo
+
 
 
 
     def draw(self,screen):
         screen.blit(self.image, self.rect)
+
+        #nariši vsak bullet iz lista
+        for bullet in self.bullets:
+            bullet.draw(screen)
 
     def update_image(self):
         # Rotate the image
@@ -49,14 +55,21 @@ class Top:
         elif direction == "right":
             self.angle -= rotation_speed
             
-        #kot gre lahko čez 360 stopinj, ali v minus, kar ni vredu.
-
+        #kot gre lahko čez 360 stopinj, ali v minus, kar ni vredu, zato dodamo ta line
         self.angle %= 360
 
-
-
         self.update_image()
+
+    def shoot(self):
+        new_bullet = bullet_script.Bullet(self.rect.centerx, self.rect.centery, 5, "#ffffff", 10, self.angle)
+        self.bullets.append(new_bullet)
     
+    def update_bullets(self):
+        for bullet in self.bullets[:]:
+            bullet.update()
+            if bullet.off_screen(self.screen_width, self.screen_height):
+                self.bullets.remove(bullet) 
+
         
     
     

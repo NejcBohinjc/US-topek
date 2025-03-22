@@ -25,7 +25,8 @@ while running:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 #tukaj bo streljanje krogel
-                pass
+                top.shoot()
+                #pass
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
@@ -34,6 +35,9 @@ while running:
     if keys[pygame.K_RIGHT]:
         top.rotate("right")
         #print(top.angle)
+
+    top.update_bullets()
+    top.draw(screen)
 
     screen.fill(background_colour) #sproti nam riše ozadje in nam zato briše sled topa
     top.draw(screen)
