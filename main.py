@@ -24,7 +24,7 @@ while True:
         if event.type == pygame.QUIT:
             running = False
     
-
+    #test
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         top.rotate("left")
