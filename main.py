@@ -1,6 +1,7 @@
 import pygame
 import topek_script
 import bullet_script
+import time
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -18,23 +19,29 @@ pygame.display.flip()
 top = topek_script.Top(100,"#000000",100,50,width/2,height/2,width,height)
 running = True
 
+#nastavitve topa
+shoot_cooldown = 0.4
+time_at_shoot = 0
+
 while running:
+    current_time = time.time()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                #tukaj bo streljanje krogel
-                top.shoot()
-                #pass
+            if event.key == pygame.K_SPACE: #tukaj je streljanje krogel
+                if current_time - time_at_shoot > shoot_cooldown:
+                    time_at_shoot = current_time
+                    top.shoot()
+
+
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         top.rotate("left")
-        #print(top.angle)
     if keys[pygame.K_RIGHT]:
         top.rotate("right")
-        #print(top.angle)
+
 
     top.update_bullets()
     top.draw(screen)
