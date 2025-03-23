@@ -1,11 +1,14 @@
 import pygame
 import random
 import config
+import time
 
 class Enemy:
-    def __init__(self,speed,damage):
+    def __init__(self,enemy_sprite, speed,damage,spawn_delay):
         self.speed = speed
         self.damage = damage
+        self.spawn_delay = spawn_delay
+        self.enemy_sprite = enemy_sprite
 
         #x,y sta random poziciji
         self.x = random.randint(30,config.screen_width)
@@ -13,7 +16,7 @@ class Enemy:
 
         
         #sprite
-        self.image = pygame.image.load("enemy_skull_sprite.png").convert_alpha()
+        self.image = pygame.image.load(enemy_sprite).convert_alpha()
 
         #nastavimo hitbox na velikost sprite-a
         self.hitbox_width = self.image.get_width() // 2
@@ -23,4 +26,5 @@ class Enemy:
     
     def spawn(self,screen):
         screen.blit(self.image, (self.x,self.y))
+         
         
