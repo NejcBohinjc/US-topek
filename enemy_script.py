@@ -20,10 +20,12 @@ class Enemy:
         self.hitbox_height = self.image.get_height() // 2
 
         self.image = pygame.transform.scale(self.image, (self.hitbox_width, self.hitbox_height))
-    
+
         #x,y sta random poziciji
         self.x = random.randint(self.hitbox_width, config.screen_width - self.hitbox_width)
         self.y = random.randint(self.hitbox_height // 2,config.screen_height - self.hitbox_height)
+
+        self.enemy_rect = pygame.Rect(self.x,self.y,self.hitbox_width,self.hitbox_height)
 
     def spawn(self,screen):
         screen.blit(self.image, (self.x,self.y))

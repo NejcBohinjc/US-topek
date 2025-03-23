@@ -18,7 +18,7 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.flip()
 
 #vsi objekti v igri
-top = topek_script.Top(100,"#000000",100,50,width/2,height/2)
+top = topek_script.Top(100,"#000000",100,50)
 en1 = enemy_script.Enemy("enemy_skull_sprite.png",10,10)
 running = True
 

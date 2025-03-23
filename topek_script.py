@@ -4,11 +4,11 @@ import bullet_script
 import config
 
 class Top:
-    def __init__(self,health,box_color,box_hitbox_width,box_hitbox_height,box_x,box_y):
+    def __init__(self,health,box_color,box_hitbox_width,box_hitbox_height):
         self.health = health
         self.box_color = box_color
-        self.box_hitbox_width = box_hitbox_width # ali lahko te 2 lina zakomentiramo?
-        self.box_hitbox_height = box_hitbox_height #
+        self.box_hitbox_width = box_hitbox_width
+        self.box_hitbox_height = box_hitbox_height
         
         #začetni kot nastavimo
         self.angle = 0
@@ -19,6 +19,8 @@ class Top:
         self.box_hitbox_width = self.original_image.get_width()
         self.box_hitbox_height = self.original_image.get_height()
 
+        #dodamo rect za collisione
+        self.player_rect = pygame.Rect(config.player_x,config.player_y,self.box_hitbox_width,self.box_hitbox_height)
         
         #naredimo originalno, neobrnjeno sliko
         
