@@ -10,8 +10,8 @@ class Enemy:
         self.enemy_sprite = enemy_sprite
 
         #x,y sta random poziciji
-        self.x = random.randint(30,config.screen_width)
-        self.y = random.randint(50,config.screen_height)
+        self.x = random.randint(30,config.screen_width - 30)
+        self.y = random.randint(50,config.screen_height - 50)
 
         
         #sprite
@@ -25,5 +25,7 @@ class Enemy:
     
     def spawn(self,screen):
         screen.blit(self.image, (self.x,self.y))
+    
+
          
         
