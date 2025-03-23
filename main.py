@@ -2,12 +2,13 @@ import pygame
 import topek_script
 import bullet_script
 import time
+import config
 
 pygame.init()
 clock = pygame.time.Clock()
 #lastnosti displaya
-width = 1024
-height = 600
+width = config.screen_width
+height = config.screen_height
 background_colour = "#898a84"
 
 #nastavimo nastavitve displaya
