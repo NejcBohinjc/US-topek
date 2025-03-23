@@ -1,5 +1,6 @@
 import pygame
 import random
+import config
 
 class Enemy:
     def __init__(self,speed,damage):

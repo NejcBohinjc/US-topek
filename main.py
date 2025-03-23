@@ -17,7 +17,7 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.flip()
 
 #vsi objekti v igri
-top = topek_script.Top(100,"#000000",100,50,width/2,height/2,width,height)
+top = topek_script.Top(100,"#000000",100,50,width/2,height/2)
 running = True
 
 #nastavitve topa

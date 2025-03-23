@@ -1,17 +1,16 @@
 import pygame
 import math
 import bullet_script
+import config
 
 class Top:
-    def __init__(self,health,box_color,box_hitbox_width,box_hitbox_height,box_x,box_y,screen_width,screen_height):
+    def __init__(self,health,box_color,box_hitbox_width,box_hitbox_height,box_x,box_y):
         self.health = health
         self.box_color = box_color
         self.box_hitbox_width = box_hitbox_width # ali lahko te 2 lina zakomentiramo?
         self.box_hitbox_height = box_hitbox_height #
         self.box_x = box_x
         self.box_y = box_y
-        self.screen_width = screen_width
-        self.screen_height = screen_height
         
         #začetni kot nastavimo
         self.angle = 0
@@ -67,8 +66,8 @@ class Top:
     def update_bullets(self):
         for bullet in self.bullets[:]:
             bullet.update()
-            if bullet.off_screen(self.screen_width, self.screen_height):
-                self.bullets.remove(bullet) 
+            if bullet.off_screen(config.screen_width, config.screen_height):
+                self.bullets.remove(bullet)
 
         
     
