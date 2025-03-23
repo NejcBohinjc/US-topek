@@ -4,10 +4,9 @@ import config
 import time
 
 class Enemy:
-    def __init__(self,enemy_sprite, speed,damage,spawn_delay):
+    def __init__(self,enemy_sprite, speed,damage):
         self.speed = speed
         self.damage = damage
-        self.spawn_delay = spawn_delay
         self.enemy_sprite = enemy_sprite
 
         #x,y sta random poziciji
