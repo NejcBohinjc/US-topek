@@ -37,8 +37,3 @@ class Enemy:
         if distance != 0:
             self.x += (distance_x / distance) * self.speed
             self.y += (distance_y / distance) * self.speed
-        
-    
-
-         
-        
