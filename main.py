@@ -3,6 +3,7 @@ import topek_script
 import bullet_script
 import time
 import config
+import enemy_script
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -18,6 +19,7 @@ pygame.display.flip()
 
 #vsi objekti v igri
 top = topek_script.Top(100,"#000000",100,50,width/2,height/2)
+en1 = enemy_script.Enemy(10,10)
 running = True
 
 #nastavitve topa
@@ -49,6 +51,7 @@ while running:
 
     screen.fill(background_colour) #sproti nam riše ozadje in nam zato briše sled topa
     top.draw(screen)
+    en1.spawn(screen)
     pygame.display.flip()
 
     clock.tick(60)
