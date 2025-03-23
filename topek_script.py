@@ -9,8 +9,6 @@ class Top:
         self.box_color = box_color
         self.box_hitbox_width = box_hitbox_width # ali lahko te 2 lina zakomentiramo?
         self.box_hitbox_height = box_hitbox_height #
-        self.box_x = box_x
-        self.box_y = box_y
         
         #začetni kot nastavimo
         self.angle = 0

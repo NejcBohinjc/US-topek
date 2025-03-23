@@ -64,9 +64,12 @@ while running:
     top.draw(screen)
     screen.fill(background_colour) #sproti nam riše ozadje in nam zato briše sled topa
     top.draw(screen)
+    pygame.draw.circle(screen,"#ffffff",(config.player_x,config.player_y),5)
     #spawnamo enemy-e
     for enemy in enemies_list:
         enemy.spawn(screen)
+        enemy.update()
+    
 
     pygame.display.flip()
 

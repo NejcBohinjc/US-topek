@@ -2,6 +2,7 @@ import pygame
 import random
 import config
 import time
+import math
 
 class Enemy:
     def __init__(self,enemy_sprite, speed,damage):
@@ -28,7 +29,15 @@ class Enemy:
         screen.blit(self.image, (self.x,self.y))
     
     def update(self):
-        pass
+        distance_x = config.player_x - 70 - self.x
+        distance_y = config.player_y - 70 - self.y
+
+        distance = math.sqrt(distance_x**2 + distance_y**2) # pitagorov izrek za izračun razdalje enemy-a in playerja :)
+
+        if distance != 0:
+            self.x += (distance_x / distance) * self.speed
+            self.y += (distance_y / distance) * self.speed
+        
     
 
          
