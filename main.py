@@ -51,7 +51,6 @@ while running:
 
     screen.fill(background_colour) #sproti nam riše ozadje in nam zato briše sled topa
     top.draw(screen)
-    en1.spawn(screen)
     pygame.display.flip()
 
     clock.tick(60)
