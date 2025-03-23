@@ -25,7 +25,7 @@ class Top:
         #naredimo originalno, neobrnjeno sliko
         
         self.image = self.original_image
-        self.rect = self.image.get_rect(center=(self.box_x, self.box_y))
+        self.rect = self.image.get_rect(center=(config.player_x, config.player_y))
 
         self.bullets = list() #moramo narediti list, da se nam bulleti ne overwritajo
 
