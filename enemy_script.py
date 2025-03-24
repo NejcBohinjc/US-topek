@@ -41,4 +41,4 @@ class Enemy:
             self.x += (distance_x / distance) * self.speed
             self.y += (distance_y / distance) * self.speed
         
-        self.enemy_rect.topleft = (self.x,self.y)
+        self.enemy_rect.center = (self.x,self.y)

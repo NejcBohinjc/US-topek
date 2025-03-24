@@ -61,6 +61,7 @@ while running:
             #lower top hp   
 
 
+
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         top.rotate("left",5)
@@ -72,7 +73,14 @@ while running:
     top.draw(screen)
     screen.fill(background_colour) #sproti nam riše ozadje in nam zato briše sled topa
     top.draw(screen)
+    
+    #debugging
+    pygame.draw.rect(screen, (255, 0, 0), top.rect, 2)  # Red for the cannon
+    for enemy in enemies_list:
+        pygame.draw.rect(screen, (0, 255, 0), enemy.enemy_rect, 2)  # Green for enemies
     #pygame.draw.circle(screen,"#ffffff",(config.player_x,config.player_y),5) #narišemo center topa za testiranje
+    
+    
     #spawnamo enemy-e
     for enemy in enemies_list:
         enemy.spawn(screen)
