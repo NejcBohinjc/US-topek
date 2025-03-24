@@ -74,11 +74,13 @@ while running:
     screen.fill(background_colour) #sproti nam riše ozadje in nam zato briše sled topa
     top.draw(screen)
     
-    #debugging
-    pygame.draw.rect(screen, (255, 0, 0), top.rect, 2)  # Red for the cannon
+    """debugging
+    pygame.draw.rect(screen, (255, 0, 0), top.rect, 2)
     for enemy in enemies_list:
-        pygame.draw.rect(screen, (0, 255, 0), enemy.enemy_rect, 2)  # Green for enemies
-    #pygame.draw.circle(screen,"#ffffff",(config.player_x,config.player_y),5) #narišemo center topa za testiranje
+        pygame.draw.rect(screen, (0, 255, 0), enemy.enemy_rect, 2)
+    
+    pygame.draw.circle(screen,"#ffffff",(config.player_x,config.player_y),5) #narišemo center topa za testiranje
+    # """
     
     
     #spawnamo enemy-e

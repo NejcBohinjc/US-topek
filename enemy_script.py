@@ -12,20 +12,19 @@ class Enemy:
  
         #sprite
         self.image = pygame.image.load(enemy_sprite).convert_alpha()
-
-        #nastavimo hitbox na velikost sprite-a
         self.hitbox_width = self.image.get_width() // 2
         self.hitbox_height = self.image.get_height() // 2
+        self.image = pygame.transform.scale(self.image, (self.hitbox_width, self.hitbox_height))
 
 
         #x,y sta random poziciji
         self.x = random.randint(self.hitbox_width, config.screen_width - self.hitbox_width)
-        self.y = random.randint(self.hitbox_height // 2,config.screen_height - self.hitbox_height)
+        self.y = random.randint(self.hitbox_height,config.screen_height - self.hitbox_height)
 
-        self.enemy_rect = pygame.Rect(self.x,self.y,self.hitbox_width,self.hitbox_height) #dodamo enemy rect za collisione
-
-        self.image = pygame.transform.scale(self.image, (self.hitbox_width, self.hitbox_height))
-
+        self.enemy_rect = pygame.Rect(self.x + (self.hitbox_width - self.hitbox_width // 3) // 2, 
+                                      self.y + (self.hitbox_height - self.hitbox_height // 3) // 2,
+                                      self.hitbox_width // 3,
+                                      self.hitbox_height // 3) #dodamo enemy rect za collisione
 
     def spawn(self,screen):
         screen.blit(self.image, (self.x,self.y))
@@ -41,4 +40,5 @@ class Enemy:
             self.x += (distance_x / distance) * self.speed
             self.y += (distance_y / distance) * self.speed
         
-        self.enemy_rect.center = (self.x,self.y)
+        self.enemy_rect.topleft = (self.x + (self.hitbox_width - self.enemy_rect.width) // 2, 
+                                   self.y + (self.hitbox_height - self.enemy_rect.height) // 2)
