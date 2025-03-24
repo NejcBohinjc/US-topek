@@ -55,16 +55,16 @@ while running:
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
-        top.rotate("left")
+        top.rotate("left",5)
     if keys[pygame.K_RIGHT]:
-        top.rotate("right")
+        top.rotate("right",5)
 
 
     top.update_bullets()
     top.draw(screen)
     screen.fill(background_colour) #sproti nam riše ozadje in nam zato briše sled topa
     top.draw(screen)
-    pygame.draw.circle(screen,"#ffffff",(config.player_x,config.player_y),5)
+    #pygame.draw.circle(screen,"#ffffff",(config.player_x,config.player_y),5) #narišemo center topa za testiranje
     #spawnamo enemy-e
     for enemy in enemies_list:
         enemy.spawn(screen)

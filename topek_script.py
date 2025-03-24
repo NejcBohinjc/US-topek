@@ -46,8 +46,7 @@ class Top:
         # Update position to keep it centered
         self.rect = self.image.get_rect(center=self.rect.center)
     
-    def rotate(self,direction):
-        rotation_speed = 2
+    def rotate(self,direction,rotation_speed):
                 
         if direction == "left":
             self.angle += rotation_speed
