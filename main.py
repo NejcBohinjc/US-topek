@@ -23,14 +23,14 @@ en1 = enemy_script.Enemy("enemy_skull_sprite.png",10,10)
 running = True
 
 #nastavitve topa
-shoot_cooldown = 0.4
+shoot_cooldown = 0.25
 time_at_shoot = 0
 
 #enemy nastavitve
 time_at_enemy_spawn = 0
 enemies_list = list()
 time_at_enemy_spawn = 0
-enemy_spawn_delay = 1
+enemy_spawn_delay = 1.5
 
 while running:
     current_time = time.time()
@@ -52,13 +52,13 @@ while running:
         #dodamo enemy-a na list 
         enemies_list.append(new_enemy)
     
-    #preveri collisione
-    for enemy in enemies_list:
+    #preveri collisione za vsakega enemy-a v listu
+    for enemy in enemies_list[:]:
         if top.rect.colliderect(enemy.enemy_rect):
             #enemy destroy
-            
-            #lower top hp
-            pass
+            print(f"destroy enemy {time.time()}")
+            enemies_list.remove(enemy)
+            #lower top hp   
 
 
     keys = pygame.key.get_pressed()
