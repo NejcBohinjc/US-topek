@@ -59,7 +59,7 @@ class Top:
         self.update_image()
 
     def shoot(self):
-        new_bullet = bullet_script.Bullet(self.rect.centerx, self.rect.centery, 5, "#ffffff", 10, self.angle)
+        new_bullet = bullet_script.Bullet(self.rect.centerx, self.rect.centery, 5, "#a16238", 10, self.angle)
         self.bullets.append(new_bullet)
     
     def update_bullets(self):
