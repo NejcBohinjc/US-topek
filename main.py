@@ -51,6 +51,14 @@ while running:
         new_enemy = enemy_script.Enemy("enemy_skull_sprite.png",2,10)
         #dodamo enemy-a na list 
         enemies_list.append(new_enemy)
+    
+    #preveri collisione
+    for enemy in enemies_list:
+        if top.rect.colliderect(enemy.enemy_rect):
+            #enemy destroy
+            
+            #lower top hp
+            pass
 
 
     keys = pygame.key.get_pressed()
