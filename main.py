@@ -63,9 +63,7 @@ while running:
             enemies_list.remove(enemy)
             #lower top hp
     
-    #print(bullet_list)
     for bullet in top.bullets[:]:
-        #print("bullet")
         for enemy in enemies_list[:]:
             if bullet.rect.colliderect(enemy.enemy_rect):
                 #print("hit")
@@ -73,7 +71,7 @@ while running:
                 
                 top.bullets.remove(bullet)
                 enemies_list.remove(enemy)
-                
+
                 break 
 
     """
