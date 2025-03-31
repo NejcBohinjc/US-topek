@@ -32,6 +32,9 @@ enemies_list = list()
 time_at_enemy_spawn = 0
 enemy_spawn_delay = 1.5
 
+#bullet
+bullet_list = list()
+
 while running:
     current_time = time.time()
     for event in pygame.event.get():
@@ -56,9 +59,32 @@ while running:
     for enemy in enemies_list[:]:
         if top.rect.colliderect(enemy.enemy_rect):
             #enemy destroy
-            print(f"destroy enemy {time.time()}")
+            #print(f"destroy enemy {time.time()}")
             enemies_list.remove(enemy)
-            #lower top hp   
+            #lower top hp
+    
+    #print(bullet_list)
+    for bullet in top.bullets[:]:
+        #print("bullet")
+        for enemy in enemies_list[:]:
+            if bullet.rect.colliderect(enemy.enemy_rect):
+                #print("hit")
+                #dodaj da gre bullet lahko čez, če imaš nek upgrade
+                
+                top.bullets.remove(bullet)
+                enemies_list.remove(enemy)
+                
+                break 
+
+    """
+    
+    for bullet in top.bullets[:]:  # Use the `top.bullets` list
+        bullet.update()
+        if bullet.off_screen(width, height):
+            top.bullets.remove(bullet)
+        bullet.draw(screen)
+    """
+
 
 
 
@@ -74,7 +100,7 @@ while running:
     screen.fill(background_colour) #sproti nam riše ozadje in nam zato briše sled topa
     top.draw(screen)
     
-    """debugging
+    """DEBUGGING
     pygame.draw.rect(screen, (255, 0, 0), top.rect, 2)
     for enemy in enemies_list:
         pygame.draw.rect(screen, (0, 255, 0), enemy.enemy_rect, 2)
