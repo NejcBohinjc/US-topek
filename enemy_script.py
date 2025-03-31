@@ -18,11 +18,11 @@ class Enemy:
 
 
         #x,y sta random poziciji
-        center_min_x = (config.screen_width // 2) - 80
-        center_max_x = (config.screen_width // 2) + 80
+        center_min_x = (config.screen_width // 2) - 110
+        center_max_x = (config.screen_width // 2) + 110
 
-        center_min_y = (config.screen_height // 2) - 80
-        center_max_y = (config.screen_height // 2) + 80
+        center_min_y = (config.screen_height // 2) - 110
+        center_max_y = (config.screen_height // 2) + 110
         self.x = -1
         self.y = -1
 
