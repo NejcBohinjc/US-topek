@@ -20,7 +20,7 @@ pygame.display.flip()
 
 #vsi objekti v igri
 top = topek_script.Top(100,"#000000",100,50)
-en1 = enemy_script.Enemy("enemy_skull_sprite.png",10,10)
+#en1 = enemy_script.Enemy("enemy_skull_sprite.png",10,10)
 running = True
 
 #nastavitve topa
@@ -55,9 +55,9 @@ while running:
         spawn_chance = random.randint(0,10)
 
         if spawn_chance < 7:
-            new_enemy = enemy_script.Enemy("enemy_skull_sprite.png",2,10)
+            new_enemy = enemy_script.Enemy("sprites/enemy_skull_sprite.png",2,10)
         elif spawn_chance >= 7:
-            new_enemy = enemy_script.Enemy2("2_enemy_skull_sprite.png",2,10)
+            new_enemy = enemy_script.Enemy2("sprites/2_enemy_skull_sprite.png",3.5,10)
 
         #ustvarimo nevega enemy-a
         #dodamo enemy-a na list 
@@ -96,9 +96,9 @@ while running:
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
-        top.rotate("left",5)
+        top.rotate("left",7)
     if keys[pygame.K_RIGHT]:
-        top.rotate("right",5)
+        top.rotate("right",7)
 
 
     top.update_bullets()

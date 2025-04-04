@@ -13,7 +13,7 @@ class Top:
         #začetni kot nastavimo
         self.angle = 0
 
-        self.original_image = pygame.image.load("BaseCannon.png").convert_alpha()
+        self.original_image = pygame.image.load("sprites/BaseCannon.png").convert_alpha()
 
         #nastavimo hitbox širino in višino na širino in višino ki jo ima slika
         self.box_hitbox_width = self.original_image.get_width()
