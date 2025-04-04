@@ -18,11 +18,11 @@ class Enemy:
 
 
         #x,y sta random poziciji
-        center_min_x = (config.screen_width // 2) - 110
-        center_max_x = (config.screen_width // 2) + 110
+        center_min_x = (config.screen_width // 2) - 170
+        center_max_x = (config.screen_width // 2) + 170 
 
-        center_min_y = (config.screen_height // 2) - 110
-        center_max_y = (config.screen_height // 2) + 110
+        center_min_y = (config.screen_height // 2) - 170
+        center_max_y = (config.screen_height // 2) + 170
         self.x = -1
         self.y = -1
 
@@ -30,6 +30,7 @@ class Enemy:
             self.x = random.randint(self.hitbox_width, config.screen_width - self.hitbox_width)
             self.y = random.randint(self.hitbox_height, config.screen_width - self.hitbox_width)
             if self.x < center_min_x or self.x > center_max_x and self.y < center_min_y or self.y > center_max_y:
+                print(f'{self.x}, {self.y}') #pokažemo spawn x,y za debugging
                 break  # If x is outside the restricted range, break out of the loop
 
 
