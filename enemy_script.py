@@ -4,6 +4,7 @@ import config
 import time
 import math
 
+#class za default enemy-a
 class Enemy:
     def __init__(self,enemy_sprite, speed,damage):
         self.speed = speed
