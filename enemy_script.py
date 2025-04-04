@@ -60,3 +60,15 @@ class Enemy:
         
         self.enemy_rect.topleft = (self.x + (self.hitbox_width - self.enemy_rect.width) // 2, 
                                    self.y + (self.hitbox_height - self.enemy_rect.height) // 2)
+        
+#2. enemy po težavnosti
+#podeduje Enemy
+class Enemy2 (Enemy):
+    def __init__(self, enemy_sprite, speed, damage):
+        super().__init__(enemy_sprite, speed, damage)
+    
+    def spawn(self, screen):
+        return super().spawn(screen)
+    
+    def update(self):
+        return super().update()

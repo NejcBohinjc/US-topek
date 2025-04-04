@@ -4,6 +4,7 @@ import bullet_script
 import time
 import config
 import enemy_script
+import random
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -50,8 +51,15 @@ while running:
     if current_time - time_at_enemy_spawn > enemy_spawn_delay:
         time_at_enemy_spawn = current_time
         
+        #generiramo random int, da nastavimo spawn chance
+        spawn_chance = random.randint(0,10)
+
+        if spawn_chance < 7:
+            new_enemy = enemy_script.Enemy("enemy_skull_sprite.png",2,10)
+        elif spawn_chance >= 7:
+            new_enemy = enemy_script.Enemy2("2_enemy_skull_sprite.png",2,10)
+
         #ustvarimo nevega enemy-a
-        new_enemy = enemy_script.Enemy("enemy_skull_sprite.png",2,10)
         #dodamo enemy-a na list 
         enemies_list.append(new_enemy)
     
