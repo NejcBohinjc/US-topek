@@ -19,7 +19,7 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.flip()
 
 #vsi objekti v igri
-top = topek_script.Top(100,"#000000",100,50)
+top = topek_script.Top("#000000",100,50)
 #en1 = enemy_script.Enemy("enemy_skull_sprite.png",10,10)
 running = True
 
@@ -55,21 +55,24 @@ while running:
         spawn_chance = random.randint(0,10)
 
         if spawn_chance < 7:
-            new_enemy = enemy_script.Enemy("sprites/enemy_skull_sprite.png",2,10)
+            new_enemy = enemy_script.Enemy("sprites/enemy_skull_sprite.png",2,2)
         elif spawn_chance >= 7:
-            new_enemy = enemy_script.Enemy2("sprites/2_enemy_skull_sprite.png",3.5,10)
+            new_enemy = enemy_script.Enemy2("sprites/2_enemy_skull_sprite.png",3.5,3.5)
 
         #ustvarimo nevega enemy-a
         #dodamo enemy-a na list 
         enemies_list.append(new_enemy)
     
-    #preveri collisione za vsakega enemy-a v listu
+    #preveri collisione za vsakega enemy-a v listu , če collide-a s top-om
     for enemy in enemies_list[:]:
         if top.rect.colliderect(enemy.enemy_rect):
             #enemy destroy
             #print(f"destroy enemy {time.time()}")
             enemies_list.remove(enemy)
+            
             #lower top hp
+            top.health_points -= enemy.damage
+            #print(top.health_points)
     
     for bullet in top.bullets[:]:
         for enemy in enemies_list[:]:
