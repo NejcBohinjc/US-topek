@@ -39,7 +39,7 @@ enemy_spawn_delay = 1.5
 bullet_list = list()
 
 #game states (gameplay,main_menu,game_over_menu)
-game_state = "game_over_menu"
+game_state = "gameplay"
 
 #text settings
 font = pygame.font.SysFont("Arial", 32)
