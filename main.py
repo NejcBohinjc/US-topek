@@ -5,6 +5,7 @@ import time
 import config
 import enemy_script
 import random
+import Button
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -46,6 +47,10 @@ font = pygame.font.SysFont("Arial", 32)
 game_over_text = font.render("Game Over!", True, (255, 255, 255))
 game_over_text_x = 425
 game_over_text_y = 135
+
+#UI components
+game_over_play_again_button = Button.Play_button(450,190,"sprites/play_button.jpg")
+
 
 while running:
     current_time = time.time()
@@ -127,9 +132,17 @@ while running:
             enemy.spawn(screen)
             enemy.update()
     
-    elif game_state == "game_over_menu":
+    if game_state == "game_over_menu":
         screen.fill(background_colour)
         screen.blit(game_over_text, (game_over_text_x,game_over_text_y))
+        game_over_play_again_button.draw(screen)
+
+        #če je uporabnik kliknil na gumb
+        if game_over_play_again_button.draw(screen):
+            game_state = "gameplay"
+            enemies_list.clear()
+            top.bullets.clear()
+            time_at_enemy_spawn = time.time()
 
             
 
