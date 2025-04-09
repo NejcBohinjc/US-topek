@@ -21,7 +21,8 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.flip()
 
 #vsi objekti v igri
-top = topek_script.Top("#000000",100,50)
+top_health = 10
+top = topek_script.Top("#000000",100,50,top_health)
 barbed_wire = pygame.image.load("sprites/barbed_wire.png").convert_alpha()
 barbed_wire = pygame.transform.scale(barbed_wire, (120,100))
 #en1 = enemy_script.Enemy("enemy_skull_sprite.png",10,10)
@@ -98,7 +99,7 @@ while running:
                 
                 #lower top hp
                 top.health_points -= enemy.damage
-                #print(top.health_points)
+                print(top.health_points)
                 if top.health_points <= 0:
                     game_state = "game_over_menu"
         
@@ -143,6 +144,7 @@ while running:
         #če je uporabnik kliknil na gumb
         if game_over_play_again_button.draw(screen):
             game_state = "gameplay"
+            top.health_points = top_health
             enemies_list.clear()
             top.bullets.clear()
             time_at_enemy_spawn = time.time()

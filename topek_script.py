@@ -4,8 +4,8 @@ import bullet_script
 import config
 
 class Top:
-    def __init__(self,box_color,box_hitbox_width,box_hitbox_height):
-        self.health_points = 10
+    def __init__(self,box_color,box_hitbox_width,box_hitbox_height,health_points):
+        self.health_points = health_points
         self.box_color = box_color
         self.box_hitbox_width = box_hitbox_width
         self.box_hitbox_height = box_hitbox_height
