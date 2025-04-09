@@ -13,7 +13,7 @@ clock = pygame.time.Clock()
 #lastnosti displaya
 width = config.screen_width
 height = config.screen_height
-background_colour = "#898a84"
+background_colour = "#c4a354"
 
 #nastavimo nastavitve displaya
 pygame.display.set_caption('US topek')
@@ -22,6 +22,8 @@ pygame.display.flip()
 
 #vsi objekti v igri
 top = topek_script.Top("#000000",100,50)
+barbed_wire = pygame.image.load("sprites/barbed_wire.png").convert_alpha()
+barbed_wire = pygame.transform.scale(barbed_wire, (120,100))
 #en1 = enemy_script.Enemy("enemy_skull_sprite.png",10,10)
 running = True
 
@@ -115,6 +117,7 @@ while running:
 
         #top.draw(screen)
         screen.fill(background_colour) #sproti nam riše ozadje in nam zato briše sled topa
+        screen.blit(barbed_wire,(width//2 - 60, height//2-45))
         top.update_bullets()
         top.draw(screen)
         
