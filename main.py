@@ -38,8 +38,8 @@ time_at_enemy_spawn = 0
 enemy_spawn_delay = 1.5
 
 enemy_types = [
-    {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2, "damage": 7, "weight" : 7},
-    {"class": enemy_script.Enemy2, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 3.2, "damage": 4, "weight": 4},
+    {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2, "damage": 5, "weight" : 7},
+    {"class": enemy_script.Enemy2, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 3.2, "damage": 3, "weight": 4},
     {"class": enemy_script.Enemy_slow_strong, "sprite": "sprites/enemy_slow_strong.png", "speed": 1, "damage": 8, "weight": 3}
 ]
 
@@ -48,7 +48,7 @@ enemy_types = [
 bullet_list = list()
 
 #game states (gameplay,main_menu,game_over_menu)
-game_state = "game_over_menu"
+game_state = "main_menu"
 
 #text settings
 font = pygame.font.SysFont("Arial", 32)
@@ -65,6 +65,13 @@ main_menu_text_y = 135
 game_over_play_again_button = Button.button(425,190,"sprites/play_button.jpg")
 main_menu_button = Button.button(425,300,"sprites/main_menu_button.jpg")
 main_menu_play_button = Button.button(425,190,"sprites/play_button.jpg")
+
+def reset_game():
+    global time_at_enemy_spawn
+    top.health_points = top_health
+    enemies_list.clear()
+    top.bullets.clear()
+    time_at_enemy_spawn = time.time()
 
 
 while running:
@@ -152,23 +159,21 @@ while running:
         #če je uporabnik kliknil na gumb i.e. če je vrnila funkcija True
         if game_over_play_again_button.draw(screen):
             game_state = "gameplay"
-            top.health_points = top_health
-            enemies_list.clear()
-            top.bullets.clear()
-            time_at_enemy_spawn = time.time()
+            reset_game()
         
         if main_menu_button.draw(screen):
+            reset_game()
             game_state = "main_menu"
-            top.health_points = top_health
-            enemies_list.clear()
-            top.bullets.clear()
-            time_at_enemy_spawn = time.time()
 
     
     if game_state == "main_menu":
         screen.fill(background_colour)
         screen.blit(main_menu_text, (main_menu_text_x,main_menu_text_y))
         main_menu_play_button.draw(screen)
+
+        if main_menu_play_button.draw(screen):
+            game_state = "gameplay"
+            reset_game()
 
 
             
