@@ -41,6 +41,7 @@ enemy_types = [
     {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2, "damage": 5, "weight" : 7},
     {"class": enemy_script.Enemy2, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 3.2, "damage": 3, "weight": 4},
     {"class": enemy_script.Enemy_slow_strong, "sprite": "sprites/enemy_slow_strong.png", "speed": 1, "damage": 8, "weight": 3}
+    #en mejhen pa hiter, ka dela mal damage-a
 ]
 
 
