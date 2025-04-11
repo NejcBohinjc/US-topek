@@ -24,7 +24,7 @@ pygame.display.flip()
 top_health = 10
 top = topek_script.Top("#000000",100,50,top_health)
 barbed_wire = pygame.image.load("sprites/barbed_wire.png").convert_alpha()
-barbed_wire = pygame.transform.scale(barbed_wire, (120,100))
+barbed_wire = pygame.transform.scale(barbed_wire, (130,110))
 #en1 = enemy_script.Enemy("enemy_skull_sprite.png",10,10)
 running = True
 
@@ -87,7 +87,7 @@ while running:
                 new_enemy = enemy_script.Enemy2("sprites/2_enemy_skull_sprite.png",3.5,3.5)
 
             #ustvarimo nevega enemy-a
-            #dodamo enemy-a na list 
+            #dodamo enemy-a na list
             enemies_list.append(new_enemy)
         
         #preveri collisione za vsakega enemy-a v listu , če collide-a s top-om
