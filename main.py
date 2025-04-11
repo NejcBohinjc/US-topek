@@ -84,21 +84,8 @@ while running:
         if current_time - time_at_enemy_spawn > enemy_spawn_delay:
             time_at_enemy_spawn = current_time
             
-            #generiramo random int, da nastavimo spawn chance
-            """
-            spawn_chance = random.randint(0,10)
-
-
-            #ustvarimo nevega enemy-a
-            if spawn_chance < 7:
-                new_enemy = enemy_script.Enemy("sprites/enemy_skull_sprite.png",2,2)
-            elif spawn_chance >= 7:
-                new_enemy = enemy_script.Enemy2("sprites/2_enemy_skull_sprite.png",3.5,3.5)
-            
-            """
-
-            selected = random.choices(enemy_types, weights=[enemy["weight"] for enemy in enemy_types], k=1)[0]
-
+            #k=1: vrni list z enim elementom, [0]: iz tega lista izberi prvi ele
+            selected = random.choices(enemy_types, weights=[enemy["weight"] for enemy in enemy_types], k=1)[0] 
             new_enemy = selected["class"](selected["sprite"], selected["speed"], selected["damage"], selected["weight"])
 
             #dodamo enemy-a na list
