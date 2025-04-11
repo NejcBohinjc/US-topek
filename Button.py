@@ -1,9 +1,10 @@
 import pygame
 
-class Play_button:
+class button:
     def __init__(self,x,y,image):
+        scale_x,scale_y = 190, 100
         self.image = pygame.image.load(image).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (150,80))
+        self.image = pygame.transform.scale(self.image, (scale_x,scale_y))
         self.rect = self.image.get_rect()
         self.rect.topleft = (x,y)
     

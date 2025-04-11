@@ -48,7 +48,7 @@ enemy_types = [
 bullet_list = list()
 
 #game states (gameplay,main_menu,game_over_menu)
-game_state = "gameplay"
+game_state = "game_over_menu"
 
 #text settings
 font = pygame.font.SysFont("Arial", 32)
@@ -56,9 +56,15 @@ font = pygame.font.SysFont("Arial", 32)
 game_over_text = font.render("Game Over!", True, (255, 255, 255))
 game_over_text_x = 425
 game_over_text_y = 135
+#main menu text settings
+main_menu_text = font.render("US topek", True, (255, 255, 255))
+main_menu_text_x = 445
+main_menu_text_y = 135
 
 #UI components
-game_over_play_again_button = Button.Play_button(450,190,"sprites/play_button.jpg")
+game_over_play_again_button = Button.button(425,190,"sprites/play_button.jpg")
+main_menu_button = Button.button(425,300,"sprites/main_menu_button.jpg")
+main_menu_play_button = Button.button(425,190,"sprites/play_button.jpg")
 
 
 while running:
@@ -141,14 +147,29 @@ while running:
         screen.fill(background_colour)
         screen.blit(game_over_text, (game_over_text_x,game_over_text_y))
         game_over_play_again_button.draw(screen)
+        main_menu_button.draw(screen)
 
-        #če je uporabnik kliknil na gumb
+        #če je uporabnik kliknil na gumb i.e. če je vrnila funkcija True
         if game_over_play_again_button.draw(screen):
             game_state = "gameplay"
             top.health_points = top_health
             enemies_list.clear()
             top.bullets.clear()
             time_at_enemy_spawn = time.time()
+        
+        if main_menu_button.draw(screen):
+            game_state = "main_menu"
+            top.health_points = top_health
+            enemies_list.clear()
+            top.bullets.clear()
+            time_at_enemy_spawn = time.time()
+
+    
+    if game_state == "main_menu":
+        screen.fill(background_colour)
+        screen.blit(main_menu_text, (main_menu_text_x,main_menu_text_y))
+        main_menu_play_button.draw(screen)
+
 
             
 
