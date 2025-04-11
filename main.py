@@ -9,6 +9,7 @@ import Button
 
 pygame.init()
 clock = pygame.time.Clock()
+running = True
 
 #lastnosti displaya
 width = config.screen_width
@@ -24,9 +25,7 @@ pygame.display.flip()
 top_health = 10
 top = topek_script.Top("#000000",100,50,top_health)
 barbed_wire = pygame.image.load("sprites/barbed_wire.png").convert_alpha()
-barbed_wire = pygame.transform.scale(barbed_wire, (180,110))
-#en1 = enemy_script.Enemy("enemy_skull_sprite.png",10,10)
-running = True
+barbed_wire = pygame.transform.scale(barbed_wire, (150,110))
 
 #nastavitve topa
 shoot_cooldown = 0.25
@@ -40,7 +39,8 @@ enemy_spawn_delay = 1.5
 
 enemy_types = [
     {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2, "damage": 7, "weight" : 7},
-    {"class": enemy_script.Enemy2, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 3.5, "damage": 4, "weight": 4}
+    {"class": enemy_script.Enemy2, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 3.2, "damage": 4, "weight": 4},
+    {"class": enemy_script.Enemy_slow_strong, "sprite": "sprites/enemy_slow_strong.png", "speed": 1, "damage": 8, "weight": 3}
 ]
 
 

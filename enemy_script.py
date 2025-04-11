@@ -64,7 +64,7 @@ class Enemy:
         
 #2. enemy po težavnosti
 #podeduje Enemy
-class Enemy2 (Enemy):
+class Enemy2(Enemy):
     def __init__(self, enemy_sprite, speed, damage,weight):
         super().__init__(enemy_sprite, speed, damage,weight)
     
@@ -73,3 +73,14 @@ class Enemy2 (Enemy):
     
     def update(self):
         return super().update()
+
+class Enemy_slow_strong(Enemy):
+    def __init__(self, enemy_sprite, speed, damage, weight):
+        super().__init__(enemy_sprite, speed, damage, weight)
+    
+    def spawn(self, screen):
+        return super().spawn(screen)
+    
+    def update(self):
+        return super().update()
+    
