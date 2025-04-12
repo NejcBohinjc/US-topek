@@ -10,6 +10,7 @@ import Button
 pygame.init()
 clock = pygame.time.Clock()
 running = True
+font = pygame.font.SysFont("Arial", 32)
 
 #lastnosti displaya
 width = config.screen_width
@@ -37,6 +38,16 @@ enemies_list = list()
 time_at_enemy_spawn = 0
 enemy_spawn_delay = 1.5
 
+#wave
+wave_count = 1
+wave_start_time = time.time()
+enemy_count = 5
+enemies_killed = 0
+new_enemies_per_wave = 3
+enemy_spawn_delay_deduction = 0.1
+min_spawn_delay = 0.5
+
+
 enemy_types = [
     {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2, "damage": 5, "weight" : 7},
     {"class": enemy_script.Enemy2, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 3.2, "damage": 3, "weight": 4},
@@ -49,10 +60,9 @@ enemy_types = [
 bullet_list = list()
 
 #game states (gameplay,main_menu,game_over_menu)
-game_state = "main_menu"
+game_state = "gameplay"
 
 #text settings
-font = pygame.font.SysFont("Arial", 32)
 #game over menu text settings
 game_over_text = font.render("Game Over!", True, (255, 255, 255))
 game_over_text_x = 425
@@ -75,6 +85,7 @@ def reset_game():
     time_at_enemy_spawn = time.time()
 
 
+print(f"start of wave {wave_count}")
 while running:
     current_time = time.time()
     for event in pygame.event.get():
@@ -82,6 +93,8 @@ while running:
             running = False
     
     if game_state == "gameplay":
+        wave_text = font.render(f"Wave {wave_count}", True, (255, 255, 255))
+        
         #spawnanje enemy-ev
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
@@ -105,12 +118,24 @@ while running:
             #dodamo enemy-a na list
             enemies_list.append(new_enemy)
         
+        if enemies_killed >= enemy_count:
+            wave_count += 1
+            enemy_count += new_enemies_per_wave
+            enemy_spawn_delay = max(min_spawn_delay, enemy_spawn_delay - enemy_spawn_delay_deduction) #omejimo da spawn time ne more biti manj kot min_spawn_delay
+            enemies_killed = 0
+            wave_start_time = time.time()
+            print(f"start of wave {wave_count}")
+            print(f'enemies eliminated {enemies_killed}')
+        
         #preveri collisione za vsakega enemy-a v listu , če collide-a s top-om
         for enemy in enemies_list[:]:
             if top.rect.colliderect(enemy.enemy_rect):
                 #enemy destroy
                 #print(f"destroy enemy {time.time()}")
                 enemies_list.remove(enemy)
+                enemies_killed += 1
+                print(f'enemies eliminated {enemies_killed}')
+
                 
                 #lower top hp
                 top.health_points -= enemy.damage
@@ -126,6 +151,8 @@ while running:
                     
                     top.bullets.remove(bullet)
                     enemies_list.remove(enemy)
+                    enemies_killed += 1
+                    print(f'enemies eliminated {enemies_killed}')
 
                     break 
 
@@ -134,8 +161,14 @@ while running:
         #top.draw(screen)
         screen.fill(background_colour) #sproti nam riše ozadje in nam zato briše sled topa
         screen.blit(barbed_wire,(width//2 - 60, height//2-45))
+        screen.blit(wave_text, (320, 20))
         top.update_bullets()
         top.draw(screen)
+        
+        #spawnamo enemy-e
+        for enemy in enemies_list:
+            enemy.spawn(screen)
+            enemy.update()
         
         """DEBUGGING
         pygame.draw.rect(screen, (255, 0, 0), top.rect, 2)
@@ -146,10 +179,6 @@ while running:
         """
         
         
-        #spawnamo enemy-e
-        for enemy in enemies_list:
-            enemy.spawn(screen)
-            enemy.update()
     
     if game_state == "game_over_menu":
         screen.fill(background_colour)
