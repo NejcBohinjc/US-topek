@@ -29,7 +29,7 @@ barbed_wire = pygame.image.load("sprites/barbed_wire.png").convert_alpha()
 barbed_wire = pygame.transform.scale(barbed_wire, (150,110))
 
 #nastavitve topa
-shoot_cooldown = 0.25
+shoot_cooldown = 0.5
 time_at_shoot = 0
 
 #enemy nastavitve
@@ -50,7 +50,7 @@ min_spawn_delay = 0.5
 
 enemy_types = [
     {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2, "damage": 5, "weight" : 7},
-    {"class": enemy_script.Enemy2, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 3.2, "damage": 3, "weight": 4},
+    {"class": enemy_script.Enemy2, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 3.5, "damage": 2.5, "weight": 4},
     {"class": enemy_script.Enemy_slow_strong, "sprite": "sprites/enemy_slow_strong.png", "speed": 1, "damage": 8, "weight": 3}
     #en mejhen pa hiter, ka dela mal damage-a
 ]
@@ -94,6 +94,7 @@ while running:
     
     if game_state == "gameplay":
         wave_text = font.render(f"Wave {wave_count}", True, (255, 255, 255))
+        enemies_text = font.render(f"Enemies left: {enemy_count - enemies_killed}", True, (255, 255, 255))
         
         #spawnanje enemy-ev
         keys = pygame.key.get_pressed()
@@ -161,7 +162,8 @@ while running:
         #top.draw(screen)
         screen.fill(background_colour) #sproti nam riše ozadje in nam zato briše sled topa
         screen.blit(barbed_wire,(width//2 - 60, height//2-45))
-        screen.blit(wave_text, (320, 20))
+        screen.blit(wave_text, (350, 20))
+        screen.blit(enemies_text, (480,20))
         top.update_bullets()
         top.draw(screen)
         
