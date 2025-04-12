@@ -73,9 +73,10 @@ main_menu_text_x = 445
 main_menu_text_y = 135
 
 #UI components
-game_over_play_again_button = Button.button(425,190,"sprites/play_button.jpg")
-main_menu_button = Button.button(425,300,"sprites/main_menu_button.jpg")
-main_menu_play_button = Button.button(425,190,"sprites/play_button.jpg")
+game_over_play_again_button = Button.button(425,190,"sprites/play_button.jpg",190,100)
+main_menu_button = Button.button(425,300,"sprites/main_menu_button.jpg",190,100)
+main_menu_play_button = Button.button(425,190,"sprites/play_button.jpg",190,100)
+start_wave_button = Button.button(30,500,"sprites/start_wave_button.jpg",100,55)
 
 def reset_game():
     global time_at_enemy_spawn
@@ -84,6 +85,15 @@ def reset_game():
     top.bullets.clear()
     time_at_enemy_spawn = time.time()
 
+def new_wave():
+    global wave_count, wave_start_time, enemy_count, new_enemies_per_wave, enemy_spawn_delay, enemies_killed
+    wave_count += 1
+    enemy_count += new_enemies_per_wave
+    enemy_spawn_delay = max(min_spawn_delay, enemy_spawn_delay - enemy_spawn_delay_deduction) #omejimo da spawn time ne more biti manj kot min_spawn_delay
+    enemies_killed = 0
+    wave_start_time = time.time()
+    print(f"start of wave {wave_count}")
+    print(f'enemies eliminated {enemies_killed}')
 
 print(f"start of wave {wave_count}")
 while running:
@@ -120,13 +130,7 @@ while running:
             enemies_list.append(new_enemy)
         
         if enemies_killed >= enemy_count:
-            wave_count += 1
-            enemy_count += new_enemies_per_wave
-            enemy_spawn_delay = max(min_spawn_delay, enemy_spawn_delay - enemy_spawn_delay_deduction) #omejimo da spawn time ne more biti manj kot min_spawn_delay
-            enemies_killed = 0
-            wave_start_time = time.time()
-            print(f"start of wave {wave_count}")
-            print(f'enemies eliminated {enemies_killed}')
+            new_wave()
         
         #preveri collisione za vsakega enemy-a v listu , če collide-a s top-om
         for enemy in enemies_list[:]:
@@ -164,6 +168,7 @@ while running:
         screen.blit(barbed_wire,(width//2 - 60, height//2-45))
         screen.blit(wave_text, (350, 20))
         screen.blit(enemies_text, (480,20))
+        start_wave_button.draw(screen)
         top.update_bullets()
         top.draw(screen)
         
