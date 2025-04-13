@@ -49,18 +49,17 @@ min_spawn_delay = 0.5
 
 
 enemy_types = [
-    {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2, "damage": 5, "weight" : 7},
-    {"class": enemy_script.Enemy2, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 3.5, "damage": 2.5, "weight": 4},
+    {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 1, "damage": 5, "weight" : 7},
+    {"class": enemy_script.Enemy2, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 1, "damage": 2.5, "weight": 4},
     {"class": enemy_script.Enemy_slow_strong, "sprite": "sprites/enemy_slow_strong.png", "speed": 1, "damage": 8, "weight": 3}
-    #en mejhen pa hiter, ka dela mal damage-a
 ]
 
 
 #bullet
 bullet_list = list()
 
-#game states (gameplay,main_menu,game_over_menu)
-game_state = "gameplay"
+#game states (gameplay,gameplay_pause,main_menu,game_over_menu)
+game_state = "main_menu"
 
 #text settings
 #game over menu text settings
@@ -79,14 +78,16 @@ main_menu_play_button = Button.button(425,190,"sprites/play_button.jpg",190,100)
 start_wave_button = Button.button(30,500,"sprites/start_wave_button.jpg",100,55)
 
 def reset_game():
-    global time_at_enemy_spawn
+    global time_at_enemy_spawn, enemy_count
     top.health_points = top_health
     enemies_list.clear()
+    enemy_count = 5
     top.bullets.clear()
     time_at_enemy_spawn = time.time()
 
 def new_wave():
     global wave_count, wave_start_time, enemy_count, new_enemies_per_wave, enemy_spawn_delay, enemies_killed
+    enemies_list.clear()
     wave_count += 1
     enemy_count += new_enemies_per_wave
     enemy_spawn_delay = max(min_spawn_delay, enemy_spawn_delay - enemy_spawn_delay_deduction) #omejimo da spawn time ne more biti manj kot min_spawn_delay
@@ -102,7 +103,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     
-    if game_state == "gameplay":
+    if game_state == "gameplay_pause" or game_state == "gameplay":
         wave_text = font.render(f"Wave {wave_count}", True, (255, 255, 255))
         enemies_text = font.render(f"Enemies left: {enemy_count - enemies_killed}", True, (255, 255, 255))
         
@@ -119,7 +120,7 @@ while running:
                     top.shoot()
         
         #spawnanje + setup enemy-ov
-        if current_time - time_at_enemy_spawn > enemy_spawn_delay:
+        if current_time - time_at_enemy_spawn > enemy_spawn_delay and game_state == "gameplay":
             time_at_enemy_spawn = current_time
             
             #k=1: vrni list z enim elementom, [0]: iz tega lista izberi prvi ele
@@ -129,8 +130,8 @@ while running:
             #dodamo enemy-a na list
             enemies_list.append(new_enemy)
         
-        if enemies_killed >= enemy_count:
-            new_wave()
+        if enemies_killed >= enemy_count and game_state == "gameplay":
+            game_state = "gameplay_pause"
         
         #preveri collisione za vsakega enemy-a v listu , če collide-a s top-om
         for enemy in enemies_list[:]:
@@ -168,7 +169,12 @@ while running:
         screen.blit(barbed_wire,(width//2 - 60, height//2-45))
         screen.blit(wave_text, (350, 20))
         screen.blit(enemies_text, (480,20))
-        start_wave_button.draw(screen)
+        if game_state == "gameplay_pause":
+            start_called = start_wave_button.draw(screen)
+            if start_called:
+                if enemy_count - enemies_killed == 0:
+                    new_wave()
+                game_state = "gameplay"
         top.update_bullets()
         top.draw(screen)
         
@@ -185,7 +191,6 @@ while running:
         pygame.draw.circle(screen,"#ffffff",(config.player_x,config.player_y),5) #narišemo center topa za testiranje
         """
         
-        
     
     if game_state == "game_over_menu":
         screen.fill(background_colour)
@@ -195,7 +200,7 @@ while running:
 
         #če je uporabnik kliknil na gumb i.e. če je vrnila funkcija True
         if game_over_play_again_button.draw(screen):
-            game_state = "gameplay"
+            game_state = "gameplay_pause"
             reset_game()
         
         if main_menu_button.draw(screen):
@@ -208,8 +213,9 @@ while running:
         screen.blit(main_menu_text, (main_menu_text_x,main_menu_text_y))
         main_menu_play_button.draw(screen)
 
+        #če je pritisnjen play na main menu
         if main_menu_play_button.draw(screen):
-            game_state = "gameplay"
+            game_state = "gameplay_pause"
             reset_game()
 
 
