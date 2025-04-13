@@ -73,6 +73,9 @@ game_over_text_y = 135
 main_menu_text = font.render("US topek", True, (255, 255, 255))
 main_menu_text_x = 445
 main_menu_text_y = 135
+#shop text setting
+coin_text_x = 10
+coin_text_y = 10
 
 #UI components
 game_over_play_again_button = Button.button(425,190,"sprites/play_button.jpg",190,100)
@@ -175,6 +178,7 @@ while running:
                     enemies_list.remove(enemy)
                     enemies_killed += 1
                     coins += 1
+                    print(f"coin c: {coins}")
                     print(f'enemies eliminated {enemies_killed}')
 
                     break 
@@ -211,6 +215,13 @@ while running:
         
         pygame.draw.circle(screen,"#ffffff",(config.player_x,config.player_y),5) #narišemo center topa za testiranje
         """
+    
+    if game_state == "shop":
+        screen.fill(background_colour)
+        coin_text = font.render(f"Coins: {coins}", True, (255,255,255))
+        screen.blit(coin_text, (coin_text_x,coin_text_y))
+
+    
         
     
     if game_state == "game_over_menu":
