@@ -29,7 +29,7 @@ barbed_wire = pygame.image.load("sprites/barbed_wire.png").convert_alpha()
 barbed_wire = pygame.transform.scale(barbed_wire, (150,110))
 
 #nastavitve topa
-shoot_cooldown = 0.5
+shoot_delay = 0.5
 time_at_shoot = 0
 coins = 0
 
@@ -77,6 +77,10 @@ main_menu_text_y = 135
 coin_text_x = 10
 coin_text_y = 10
 
+shooting_delay_text = font.render("Shooting delay (5)", True, (255, 255, 255))
+shooting_delay_text_x, shooting_delay_text_y = 100, 75
+shooting_delay_button = Button.button(shooting_delay_text_x + 70, shooting_delay_text_y + 50,"sprites/buy_button.jpg",100,55)
+
 #UI components
 game_over_play_again_button = Button.button(425,190,"sprites/play_button.jpg",190,100)
 main_menu_button = Button.button(425,300,"sprites/main_menu_button.jpg",190,100)
@@ -85,7 +89,7 @@ start_wave_button = Button.button(30,500,"sprites/start_wave_button.jpg",100,55)
 shop_button = Button.button(30,425,"sprites/shop_button.jpg",100,55)
 
 def reset_game():
-    global time_at_enemy_spawn, enemy_count, wave_count, coins
+    global time_at_enemy_spawn, enemy_count, wave_count, coins, shoot_delay
     top.health_points = top_health
     enemies_list.clear()
     enemy_count = 2
@@ -93,6 +97,7 @@ def reset_game():
     time_at_enemy_spawn = time.time()
     wave_count = 0
     coins = 0
+    shoot_delay = 0.5
     new_wave()
 
 def new_wave():
@@ -127,6 +132,7 @@ while running:
     if game_state == "gameplay_pause" or game_state == "gameplay":
         wave_text = font.render(f"Wave {wave_count}", True, (255, 255, 255))
         enemies_text = font.render(f"Enemies left: {enemy_count - enemies_killed}", True, (255, 255, 255))
+        coin_text = font.render(f"Coins: {coins}", True, (255,255,255))
         
         #spawnanje enemy-ev
         keys = pygame.key.get_pressed()
@@ -136,7 +142,7 @@ while running:
             top.rotate("right",7)
         
         if keys[pygame.K_SPACE]:
-                if current_time - time_at_shoot > shoot_cooldown:
+                if current_time - time_at_shoot > shoot_delay:
                     time_at_shoot = current_time
                     top.shoot()
         
@@ -190,6 +196,7 @@ while running:
         screen.blit(barbed_wire,(width//2 - 60, height//2-45))
         screen.blit(wave_text, (350, 20))
         screen.blit(enemies_text, (480,20))
+        screen.blit(coin_text, (coin_text_x,coin_text_y))
         if game_state == "gameplay_pause":
             start_called = start_wave_button.draw(screen)
             shop_called = shop_button.draw(screen)
@@ -220,8 +227,13 @@ while running:
         screen.fill(background_colour)
         coin_text = font.render(f"Coins: {coins}", True, (255,255,255))
         screen.blit(coin_text, (coin_text_x,coin_text_y))
-
-    
+        screen.blit(shooting_delay_text, (shooting_delay_text_x,shooting_delay_text_y))
+        
+        shoot_dela_b = shooting_delay_button.draw(screen)
+        if shoot_dela_b and coins >= 1:
+            coins -=5
+            shoot_delay = max(0.1, shoot_delay - 0.15)
+            print(f"shoot delay = {shoot_delay}")
         
     
     if game_state == "game_over_menu":
