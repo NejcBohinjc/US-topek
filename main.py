@@ -31,6 +31,7 @@ barbed_wire = pygame.transform.scale(barbed_wire, (150,110))
 #nastavitve topa
 shoot_cooldown = 0.5
 time_at_shoot = 0
+coins = 0
 
 #enemy nastavitve
 time_at_enemy_spawn = 0
@@ -60,7 +61,7 @@ enemy_types = [
 #bullet
 bullet_list = list()
 
-#game states (gameplay,gameplay_pause,main_menu,game_over_menu)
+#game states (gameplay,gameplay_pause,main_menu,game_over_menu,shop)
 game_state = "main_menu"
 
 #text settings
@@ -78,15 +79,17 @@ game_over_play_again_button = Button.button(425,190,"sprites/play_button.jpg",19
 main_menu_button = Button.button(425,300,"sprites/main_menu_button.jpg",190,100)
 main_menu_play_button = Button.button(425,190,"sprites/play_button.jpg",190,100)
 start_wave_button = Button.button(30,500,"sprites/start_wave_button.jpg",100,55)
+shop_button = Button.button(30,425,"sprites/shop_button.jpg",100,55)
 
 def reset_game():
-    global time_at_enemy_spawn, enemy_count, wave_count
+    global time_at_enemy_spawn, enemy_count, wave_count, coins
     top.health_points = top_health
     enemies_list.clear()
     enemy_count = 2
     top.bullets.clear()
     time_at_enemy_spawn = time.time()
     wave_count = 0
+    coins = 0
     new_wave()
 
 def new_wave():
@@ -171,6 +174,7 @@ while running:
                     top.bullets.remove(bullet)
                     enemies_list.remove(enemy)
                     enemies_killed += 1
+                    coins += 1
                     print(f'enemies eliminated {enemies_killed}')
 
                     break 
@@ -184,11 +188,14 @@ while running:
         screen.blit(enemies_text, (480,20))
         if game_state == "gameplay_pause":
             start_called = start_wave_button.draw(screen)
+            shop_called = shop_button.draw(screen)
             if start_called:
                 print("start of wave called")
                 print(f'{enemy_count} - {enemies_killed} = {enemy_count - enemies_killed}')
                 new_wave()
                 game_state = "gameplay"
+            if shop_called:
+                game_state = "shop"
         top.update_bullets()
         top.draw(screen)
         
