@@ -36,10 +36,12 @@ time_at_shoot = 0
 time_at_enemy_spawn = 0
 enemies_list = list()
 time_at_enemy_spawn = 0
-enemy_spawn_delay = 1.5
+enemy_spawn_delay = 1.6
+enemies_to_spawn = []
+spawned_enemies = 0
 
 #wave
-wave_count = 1
+wave_count = 0
 wave_start_time = time.time()
 enemy_count = 5
 enemies_killed = 0
@@ -49,8 +51,8 @@ min_spawn_delay = 0.5
 
 
 enemy_types = [
-    {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 1, "damage": 5, "weight" : 7},
-    {"class": enemy_script.Enemy2, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 1, "damage": 2.5, "weight": 4},
+    {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2.5, "damage": 5, "weight" : 7},
+    {"class": enemy_script.Enemy_fast_weak, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 3.5, "damage": 2.5, "weight": 4},
     {"class": enemy_script.Enemy_slow_strong, "sprite": "sprites/enemy_slow_strong.png", "speed": 1, "damage": 8, "weight": 3}
 ]
 
@@ -78,23 +80,36 @@ main_menu_play_button = Button.button(425,190,"sprites/play_button.jpg",190,100)
 start_wave_button = Button.button(30,500,"sprites/start_wave_button.jpg",100,55)
 
 def reset_game():
-    global time_at_enemy_spawn, enemy_count
+    global time_at_enemy_spawn, enemy_count, wave_count
     top.health_points = top_health
     enemies_list.clear()
-    enemy_count = 5
+    enemy_count = 2
     top.bullets.clear()
     time_at_enemy_spawn = time.time()
+    wave_count = 0
+    new_wave()
 
 def new_wave():
-    global wave_count, wave_start_time, enemy_count, new_enemies_per_wave, enemy_spawn_delay, enemies_killed
+    global enemies_to_spawn, spawned_enemies, game_state, enemy_count, wave_count, enemies_killed, enemy_spawn_delay
+    game_state = "gameplay"
     enemies_list.clear()
+    enemies_to_spawn.clear()
+    spawned_enemies = 0
+    enemy_count += 3
     wave_count += 1
-    enemy_count += new_enemies_per_wave
-    enemy_spawn_delay = max(min_spawn_delay, enemy_spawn_delay - enemy_spawn_delay_deduction) #omejimo da spawn time ne more biti manj kot min_spawn_delay
     enemies_killed = 0
-    wave_start_time = time.time()
-    print(f"start of wave {wave_count}")
-    print(f'enemies eliminated {enemies_killed}')
+    enemy_spawn_delay = max(min_spawn_delay, enemy_spawn_delay - enemy_spawn_delay_deduction)
+    print(enemy_spawn_delay)
+
+    print(f"this is wave {wave_count}")
+    print(f"enemies to kill {enemy_count}")
+
+    for _ in range(enemy_count):
+        #k=1: vrni list z enim elementom, [0]: iz tega lista izberi prvi ele
+        selected = random.choices(enemy_types, weights=[enemy["weight"] for enemy in enemy_types], k=1)[0]
+        new_enemy = selected["class"](selected["sprite"], selected["speed"], selected["damage"], selected["weight"])
+        enemies_to_spawn.append(new_enemy)
+
 
 print(f"start of wave {wave_count}")
 while running:
@@ -123,12 +138,10 @@ while running:
         if current_time - time_at_enemy_spawn > enemy_spawn_delay and game_state == "gameplay":
             time_at_enemy_spawn = current_time
             
-            #k=1: vrni list z enim elementom, [0]: iz tega lista izberi prvi ele
-            selected = random.choices(enemy_types, weights=[enemy["weight"] for enemy in enemy_types], k=1)[0] 
-            new_enemy = selected["class"](selected["sprite"], selected["speed"], selected["damage"], selected["weight"])
-
-            #dodamo enemy-a na list
-            enemies_list.append(new_enemy)
+            if spawned_enemies < len(enemies_to_spawn):
+                new_enemy = enemies_to_spawn[spawned_enemies]
+                enemies_list.append(new_enemy)
+                spawned_enemies +=1
         
         if enemies_killed >= enemy_count and game_state == "gameplay":
             game_state = "gameplay_pause"
@@ -172,8 +185,9 @@ while running:
         if game_state == "gameplay_pause":
             start_called = start_wave_button.draw(screen)
             if start_called:
-                if enemy_count - enemies_killed == 0:
-                    new_wave()
+                print("start of wave called")
+                print(f'{enemy_count} - {enemies_killed} = {enemy_count - enemies_killed}')
+                new_wave()
                 game_state = "gameplay"
         top.update_bullets()
         top.draw(screen)

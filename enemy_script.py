@@ -64,7 +64,7 @@ class Enemy:
         
 #2. enemy po težavnosti
 #podeduje Enemy
-class Enemy2(Enemy):
+class Enemy_fast_weak(Enemy):
     def __init__(self, enemy_sprite, speed, damage,weight):
         super().__init__(enemy_sprite, speed, damage,weight)
     
