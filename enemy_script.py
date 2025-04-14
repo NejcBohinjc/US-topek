@@ -6,11 +6,12 @@ import math
 
 #class za default enemy-a
 class Enemy:
-    def __init__(self,enemy_sprite,speed,damage,weight):
+    def __init__(self,enemy_sprite,speed,damage,weight,health_points):
         self.speed = speed
         self.damage = damage
         self.enemy_sprite = enemy_sprite
         self.weight = weight
+        self.health_points = health_points
  
         #sprite
         self.image = pygame.image.load(enemy_sprite).convert_alpha()
@@ -65,8 +66,8 @@ class Enemy:
 #2. enemy po težavnosti
 #podeduje Enemy
 class Enemy_fast_weak(Enemy):
-    def __init__(self, enemy_sprite, speed, damage,weight):
-        super().__init__(enemy_sprite, speed, damage,weight)
+    def __init__(self, enemy_sprite, speed, damage,weight,health_points):
+        super().__init__(enemy_sprite, speed, damage,weight,health_points)
     
     def spawn(self, screen):
         return super().spawn(screen)
@@ -75,8 +76,8 @@ class Enemy_fast_weak(Enemy):
         return super().update()
 
 class Enemy_slow_strong(Enemy):
-    def __init__(self, enemy_sprite, speed, damage, weight):
-        super().__init__(enemy_sprite, speed, damage, weight)
+    def __init__(self, enemy_sprite, speed, damage, weight,health_points):
+        super().__init__(enemy_sprite, speed, damage, weight,health_points)
     
     def spawn(self, screen):
         return super().spawn(screen)

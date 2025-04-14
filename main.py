@@ -25,12 +25,13 @@ pygame.display.flip()
 
 #vsi objekti v igri
 top_health = 10
-top = topek_script.Top("#000000",100,50,top_health)
+top_damage = 1
+top = topek_script.Top("#000000",100,50,top_health,top_damage)
 barbed_wire = pygame.image.load("sprites/barbed_wire.png").convert_alpha()
 barbed_wire = pygame.transform.scale(barbed_wire, (150,110))
 
 #nastavitve topa
-shoot_delay = 0.5
+shoot_delay = 0
 time_at_shoot = 0
 coins = 0
 
@@ -53,9 +54,9 @@ min_spawn_delay = 0.5
 
 
 enemy_types = [
-    {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2.5, "damage": 5, "weight" : 7},
-    {"class": enemy_script.Enemy_fast_weak, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 3.5, "damage": 2.5, "weight": 4},
-    {"class": enemy_script.Enemy_slow_strong, "sprite": "sprites/enemy_slow_strong.png", "speed": 1, "damage": 8, "weight": 3}
+    {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2.5, "damage": 5, "weight" : 7, "health_points": 2},
+    {"class": enemy_script.Enemy_fast_weak, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 3.5, "damage": 2.5, "weight": 4, "health_points": 1},
+    {"class": enemy_script.Enemy_slow_strong, "sprite": "sprites/enemy_slow_strong.png", "speed": 1, "damage": 8, "weight": 3, "health_points": 3}
 ]
 
 
@@ -63,7 +64,7 @@ enemy_types = [
 bullet_list = list()
 
 #game states (gameplay,gameplay_pause,main_menu,game_over_menu,shop)
-game_state = "shop"
+game_state = "main_menu"
 
 #text settings
 #game over menu text settings
@@ -125,7 +126,7 @@ def new_wave():
     for _ in range(enemy_count):
         #k=1: vrni list z enim elementom, [0]: iz tega lista izberi prvi ele
         selected = random.choices(enemy_types, weights=[enemy["weight"] for enemy in enemy_types], k=1)[0]
-        new_enemy = selected["class"](selected["sprite"], selected["speed"], selected["damage"], selected["weight"])
+        new_enemy = selected["class"](selected["sprite"], selected["speed"], selected["damage"], selected["weight"], selected["health_points"])
         enemies_to_spawn.append(new_enemy)
 
 
@@ -188,13 +189,15 @@ while running:
                     #dodaj da gre bullet lahko čez, če imaš nek upgrade
                     
                     top.bullets.remove(bullet)
-                    enemies_list.remove(enemy)
-                    enemies_killed += 1
-                    coins += 1
-                    print(f"coin c: {coins}")
-                    print(f'enemies eliminated {enemies_killed}')
+                    enemy.health_points -= top.damage
+                    if enemy.health_points <= 0:
+                        enemies_list.remove(enemy)
+                        enemies_killed += 1
+                        coins += 1
+                        print(f"coin c: {coins}")
+                        print(f'enemies eliminated {enemies_killed}')
 
-                    break 
+                    break
 
 
 
