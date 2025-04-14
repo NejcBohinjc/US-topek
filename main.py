@@ -78,7 +78,7 @@ main_menu_text_y = 135
 coin_text_x = 10
 coin_text_y = 10
 
-shooting_delay_text = font.render("Shooting delay (5)", True, (255, 255, 255))
+shooting_delay_text = font.render("Faster shooting (5)", True, (255, 255, 255))
 shooting_delay_text_x, shooting_delay_text_y = 100, 75
 shooting_delay_button = Button.button(shooting_delay_text_x + 70, shooting_delay_text_y + 50,"sprites/buy_button.jpg",100,55)
 
@@ -88,6 +88,7 @@ main_menu_button = Button.button(425,300,"sprites/main_menu_button.jpg",190,100)
 main_menu_play_button = Button.button(425,190,"sprites/play_button.jpg",190,100)
 start_wave_button = Button.button(30,500,"sprites/start_wave_button.jpg",100,55)
 shop_button = Button.button(30,425,"sprites/shop_button.jpg",100,55)
+exit_shop_button = Button.button(10,530,"sprites/exit_button.jpg",100,55)
 
 def reset_game():
     global time_at_enemy_spawn, enemy_count, wave_count, coins, shoot_delay
@@ -130,7 +131,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     
-    if game_state == "gameplay_pause" or game_state == "gameplay":
+    if game_state == "gameplay":
         wave_text = font.render(f"Wave {wave_count}", True, (255, 255, 255))
         enemies_text = font.render(f"Enemies left: {enemy_count - enemies_killed}", True, (255, 255, 255))
         coin_text = font.render(f"Coins: {coins}", True, (255,255,255))
@@ -231,11 +232,14 @@ while running:
         screen.blit(shooting_delay_text, (shooting_delay_text_x,shooting_delay_text_y))
         
         shoot_dela_b = shooting_delay_button.draw(screen)
-        if shoot_dela_b and coins >= 1:
+        if shoot_dela_b and coins >= 5:
             coins -=5
             shoot_delay = max(0.1, shoot_delay - 0.15)
             print(f"shoot delay = {shoot_delay}")
         
+        exit_shop_b = exit_shop_button.draw(screen)
+        if exit_shop_b:
+            game_state = "gameplay_pause"
     
     if game_state == "game_over_menu":
         screen.fill(background_colour)
