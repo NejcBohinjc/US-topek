@@ -63,7 +63,7 @@ enemy_types = [
 bullet_list = list()
 
 #game states (gameplay,gameplay_pause,main_menu,game_over_menu,shop)
-game_state = "main_menu"
+game_state = "shop"
 
 #text settings
 #game over menu text settings
@@ -81,6 +81,11 @@ coin_text_y = 10
 shooting_delay_text = font.render("Faster shooting (5)", True, (255, 255, 255))
 shooting_delay_text_x, shooting_delay_text_y = 100, 75
 shooting_delay_button = Button.button(shooting_delay_text_x + 70, shooting_delay_text_y + 50,"sprites/buy_button.jpg",100,55)
+
+damage_text = font.render("Damage (5)", True, (255, 255, 255))
+damage_text_x, damage_text_y = 500, 75
+damage_button = Button.button(damage_text_x + 15, damage_text_y + 50,"sprites/buy_button.jpg",100,55)
+
 
 #UI components
 game_over_play_again_button = Button.button(425,190,"sprites/play_button.jpg",190,100)
@@ -260,6 +265,7 @@ while running:
         coin_text = font.render(f"Coins: {coins}", True, (255,255,255))
         screen.blit(coin_text, (coin_text_x,coin_text_y))
         screen.blit(shooting_delay_text, (shooting_delay_text_x,shooting_delay_text_y))
+        screen.blit(damage_text, (damage_text_x, damage_text_y))
         
         shoot_dela_b = shooting_delay_button.draw(screen)
         if shoot_dela_b and coins >= 5 and shoot_delay >= 0.1:
@@ -267,6 +273,8 @@ while running:
             shoot_delay = max(0.1, shoot_delay - 0.09)
             print(f"shoot delay = {shoot_delay}")
             time.sleep(0.5)
+        
+        damage_b = damage_button.draw(screen)
         
         exit_shop_b = exit_shop_button.draw(screen)
         if exit_shop_b:
@@ -299,11 +307,6 @@ while running:
             game_state = "gameplay_pause"
             reset_game()
 
-
-            
-
-    
-    
     pygame.display.flip()
 
     clock.tick(60)
