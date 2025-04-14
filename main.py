@@ -7,6 +7,7 @@ import enemy_script
 import random
 import Button
 
+
 pygame.init()
 clock = pygame.time.Clock()
 running = True
