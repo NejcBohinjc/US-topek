@@ -88,7 +88,7 @@ main_menu_button = Button.button(425,300,"sprites/main_menu_button.jpg",190,100)
 main_menu_play_button = Button.button(425,190,"sprites/play_button.jpg",190,100)
 start_wave_button = Button.button(30,500,"sprites/start_wave_button.jpg",100,55)
 shop_button = Button.button(30,425,"sprites/shop_button.jpg",100,55)
-exit_shop_button = Button.button(10,530,"sprites/exit_button.jpg",100,55)
+exit_shop_button = Button.button(900,530,"sprites/exit_button.jpg",100,55)
 
 def reset_game():
     global time_at_enemy_spawn, enemy_count, wave_count, coins, shoot_delay
@@ -216,6 +216,7 @@ while running:
         pygame.draw.circle(screen,"#ffffff",(config.player_x,config.player_y),5) #narišemo center topa za testiranje
         """
     if game_state == "gameplay_pause":
+        #print("this is gameplay_pause")
         wave_text = font.render(f"Wave {wave_count}", True, (255, 255, 255))
         enemies_text = font.render(f"Enemies left: {enemy_count - enemies_killed}", True, (255, 255, 255))
         coin_text = font.render(f"Coins: {coins}", True, (255,255,255))
@@ -238,8 +239,8 @@ while running:
 
 
         if start_called:
-            print("start of wave called")
-            print(f'{enemy_count} - {enemies_killed} = {enemy_count - enemies_killed}')
+            #print("start of wave called")
+            #print(f'{enemy_count} - {enemies_killed} = {enemy_count - enemies_killed}')
             new_wave()
             game_state = "gameplay"
         if shop_called:
@@ -261,14 +262,16 @@ while running:
         screen.blit(shooting_delay_text, (shooting_delay_text_x,shooting_delay_text_y))
         
         shoot_dela_b = shooting_delay_button.draw(screen)
-        if shoot_dela_b and coins >= 5:
+        if shoot_dela_b and coins >= 5 and shoot_delay >= 0.1:
             coins -=5
-            shoot_delay = max(0.1, shoot_delay - 0.15)
+            shoot_delay = max(0.1, shoot_delay - 0.09)
             print(f"shoot delay = {shoot_delay}")
+            time.sleep(0.5)
         
         exit_shop_b = exit_shop_button.draw(screen)
         if exit_shop_b:
             game_state = "gameplay_pause"
+            continue
     
     if game_state == "game_over_menu":
         screen.fill(background_colour)
