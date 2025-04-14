@@ -136,7 +136,7 @@ while running:
         enemies_text = font.render(f"Enemies left: {enemy_count - enemies_killed}", True, (255, 255, 255))
         coin_text = font.render(f"Coins: {coins}", True, (255,255,255))
         
-        #spawnanje enemy-ev
+        
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             top.rotate("left",7)
@@ -199,16 +199,7 @@ while running:
         screen.blit(wave_text, (350, 20))
         screen.blit(enemies_text, (480,20))
         screen.blit(coin_text, (coin_text_x,coin_text_y))
-        if game_state == "gameplay_pause":
-            start_called = start_wave_button.draw(screen)
-            shop_called = shop_button.draw(screen)
-            if start_called:
-                print("start of wave called")
-                print(f'{enemy_count} - {enemies_killed} = {enemy_count - enemies_killed}')
-                new_wave()
-                game_state = "gameplay"
-            if shop_called:
-                game_state = "shop"
+        #if game_state == "gameplay_pause":
         top.update_bullets()
         top.draw(screen)
         
@@ -224,7 +215,45 @@ while running:
         
         pygame.draw.circle(screen,"#ffffff",(config.player_x,config.player_y),5) #narišemo center topa za testiranje
         """
-    
+    if game_state == "gameplay_pause":
+        wave_text = font.render(f"Wave {wave_count}", True, (255, 255, 255))
+        enemies_text = font.render(f"Enemies left: {enemy_count - enemies_killed}", True, (255, 255, 255))
+        coin_text = font.render(f"Coins: {coins}", True, (255,255,255))
+        
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            top.rotate("left",7)
+        if keys[pygame.K_RIGHT]:
+            top.rotate("right",7)
+
+        if keys[pygame.K_SPACE]:
+                if current_time - time_at_shoot > shoot_delay:
+                    time_at_shoot = current_time
+                    top.shoot()
+        
+        screen.fill(background_colour) #sproti nam riše ozadje in nam zato briše sled topa
+        start_called = start_wave_button.draw(screen)
+        shop_called = shop_button.draw(screen)
+
+
+
+        if start_called:
+            print("start of wave called")
+            print(f'{enemy_count} - {enemies_killed} = {enemy_count - enemies_killed}')
+            new_wave()
+            game_state = "gameplay"
+        if shop_called:
+            game_state = "shop"
+        
+        screen.blit(wave_text, (350, 20))
+        screen.blit(enemies_text, (480,20))
+        screen.blit(barbed_wire,(width//2 - 60, height//2-45))
+        screen.blit(coin_text, (coin_text_x,coin_text_y))
+        top.update_bullets()
+        top.draw(screen)
+        
+
+
     if game_state == "shop":
         screen.fill(background_colour)
         coin_text = font.render(f"Coins: {coins}", True, (255,255,255))
