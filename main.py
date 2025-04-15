@@ -54,9 +54,9 @@ min_spawn_delay = 0.5
 
 
 enemy_types = [
-    {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2, "damage": 5, "weight" : 7, "health_points": 2},
-    {"class": enemy_script.Enemy_fast_weak, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 2.5, "damage": 2.5, "weight": 4, "health_points": 1},
-    {"class": enemy_script.Enemy_slow_strong, "sprite": "sprites/enemy_slow_strong.png", "speed": 1, "damage": 8, "weight": 3, "health_points": 3}
+    {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2, "damage": 5, "weight" : 3, "health_points": 2},
+    {"class": enemy_script.Enemy_fast_weak, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 2.5, "damage": 1.25, "weight": 4, "health_points": 1},
+    {"class": enemy_script.Enemy_slow_strong, "sprite": "sprites/enemy_slow_strong.png", "speed": 1, "damage": 5, "weight": 3, "health_points": 3}
 ]
 
 
