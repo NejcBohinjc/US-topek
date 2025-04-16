@@ -6,7 +6,7 @@ class  HealthBar:
     def __init__(self,health):
         self.health = health
         self.size = health
-        self.y_offset = 70
+        self.y_offset = 75
     
     def update(self, screen):
         #red bar
