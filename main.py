@@ -6,6 +6,7 @@ import config
 import enemy_script
 import random
 import Button
+import health_bar
 #test
 
 pygame.init()
@@ -29,6 +30,7 @@ top_damage = 1
 top = topek_script.Top("#000000",100,50,top_health,top_damage)
 barbed_wire = pygame.image.load("sprites/barbed_wire.png").convert_alpha()
 barbed_wire = pygame.transform.scale(barbed_wire, (150,110))
+h_bar = health_bar.HealthBar(top.health_points)
 
 #nastavitve topa
 shoot_delay = 0
@@ -173,6 +175,7 @@ while running:
                 #print(f"destroy enemy {time.time()}")
                 enemies_list.remove(enemy)
                 enemies_killed += 1
+                h_bar.lower(enemy.damage)
                 print(f'enemies eliminated {enemies_killed}')
 
                 
@@ -207,9 +210,9 @@ while running:
         screen.blit(wave_text, (350, 20))
         screen.blit(enemies_text, (480,20))
         screen.blit(coin_text, (coin_text_x,coin_text_y))
-        #if game_state == "gameplay_pause":
         top.update_bullets()
         top.draw(screen)
+        h_bar.update(screen)
         
         #spawnamo enemy-e
         for enemy in enemies_list:
