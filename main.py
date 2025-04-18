@@ -110,7 +110,7 @@ def reset_game():
     top.bullets.clear()
     time_at_enemy_spawn = time.time()
     wave_count = 0
-    coins = 999
+    coins = 0
     shoot_delay = 0.5
     top.damage = 1
     new_wave()
