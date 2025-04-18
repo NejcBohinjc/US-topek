@@ -5,12 +5,12 @@ import config
 class  HealthBar:
     def __init__(self,health):
         self.health = health
-        self.size = health
+        self.bar_size = health
         self.y_offset = 75
     
     def update(self, screen):
         #red bar
-        rect_r = pygame.Rect(config.player_x,config.player_y - self.y_offset,self.size * 10, 30)
+        rect_r = pygame.Rect(config.player_x,config.player_y - self.y_offset,self.bar_size * 10, 30)
         rect_r.center = (config.player_x,config.player_y - self.y_offset)
         pygame.draw.rect(screen, "#f24933", rect_r)
         
@@ -20,3 +20,6 @@ class  HealthBar:
     
     def lower(self, damage):
         self.health -= damage
+    
+    def reset(self):
+        self.health = self.bar_size

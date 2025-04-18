@@ -56,9 +56,9 @@ min_spawn_delay = 0.5
 
 
 enemy_types = [
-    {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2, "damage": 5, "weight" : 3, "health_points": 2},
+    {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2, "damage": 3, "weight" : 3, "health_points": 1},
     {"class": enemy_script.Enemy_fast_weak, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 2.5, "damage": 1.25, "weight": 4, "health_points": 1},
-    {"class": enemy_script.Enemy_slow_strong, "sprite": "sprites/enemy_slow_strong.png", "speed": 1, "damage": 5, "weight": 3, "health_points": 3}
+    {"class": enemy_script.Enemy_slow_strong, "sprite": "sprites/enemy_slow_strong.png", "speed": 1, "damage": 5, "weight": 3, "health_points": 1}
 ]
 
 
@@ -70,7 +70,7 @@ game_state = "main_menu"
 
 #text settings
 #game over menu text settings
-game_over_text = font.render("Game Over!", True, (255, 255, 255))
+game_over_text = font.render("Game Over!", True, (255, 255, 255)) #pogooglal sem kako se rendera text, in kako se ga blita
 game_over_text_x = 425
 game_over_text_y = 135
 #main menu text settings
@@ -99,7 +99,7 @@ shop_button = Button.button(30,425,"sprites/shop_button.jpg",100,55)
 exit_shop_button = Button.button(900,530,"sprites/exit_button.jpg",100,55)
 
 def reset_game():
-    global time_at_enemy_spawn, enemy_count, wave_count, coins, shoot_delay
+    global time_at_enemy_spawn, enemy_count, wave_count, coins, shoot_delay #vprašal sem chatgpt katere spremenljivke naj bodo globalne
     top.health_points = top_health
     enemies_list.clear()
     enemy_count = 2
@@ -109,6 +109,7 @@ def reset_game():
     coins = 0
     shoot_delay = 0.5
     new_wave()
+    h_bar.reset()
 
 def new_wave():
     global enemies_to_spawn, spawned_enemies, game_state, enemy_count, wave_count, enemies_killed, enemy_spawn_delay
@@ -125,9 +126,11 @@ def new_wave():
     print(f"this is wave {wave_count}")
     print(f"enemies to kill {enemy_count}")
 
+    #tukaj generiramo list enemiov za vsak wave, ne spawnamo jih sproti. To idejo sem dobil sam, vendar sem uporabil aI da mi je to idejo pomagal spremeniti v kodo.
     for _ in range(enemy_count):
         #k=1: vrni list z enim elementom, [0]: iz tega lista izberi prvi ele
         selected = random.choices(enemy_types, weights=[enemy["weight"] for enemy in enemy_types], k=1)[0]
+        #novega enemy-a v zogrnji vrstici izberemo z random choices na podlagi weights, ter new-enemy nastavimo na selected in vse njegove atribute nastavimo
         new_enemy = selected["class"](selected["sprite"], selected["speed"], selected["damage"], selected["weight"], selected["health_points"])
         enemies_to_spawn.append(new_enemy)
 
