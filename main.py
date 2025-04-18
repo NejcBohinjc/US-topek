@@ -52,12 +52,12 @@ enemy_count = 5
 enemies_killed = 0
 new_enemies_per_wave = 3
 enemy_spawn_delay_deduction = 0.1
-min_spawn_delay = 0.5
+min_spawn_delay = 0.8
 
 
 enemy_types = [
-    {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2, "damage": 3, "weight" : 3, "health_points": 1},
-    {"class": enemy_script.Enemy_fast_weak, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 2.5, "damage": 1.25, "weight": 4, "health_points": 1},
+    {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2, "damage": 2.25, "weight" : 3, "health_points": 1},
+    {"class": enemy_script.Enemy_fast_weak, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 1.75, "damage": 1.25, "weight": 4, "health_points": 1},
     {"class": enemy_script.Enemy_slow_strong, "sprite": "sprites/enemy_slow_strong.png", "speed": 1, "damage": 5, "weight": 3, "health_points": 2}
 ]
 
@@ -110,7 +110,7 @@ def reset_game():
     top.bullets.clear()
     time_at_enemy_spawn = time.time()
     wave_count = 0
-    coins = 0
+    coins = 999
     shoot_delay = 0.5
     top.damage = 1
     new_wave()
@@ -270,6 +270,7 @@ while running:
         screen.blit(barbed_wire,(width//2 - 60, height//2-45))
         screen.blit(coin_text, (coin_text_x,coin_text_y))
         top.update_bullets()
+        h_bar.update(screen)
         top.draw(screen)
         
 
@@ -282,19 +283,21 @@ while running:
         screen.blit(damage_text, (damage_text_x, damage_text_y))
         screen.blit(health_text, (health_text_x,health_text_y))
         
-        shoot_dela_b = shooting_delay_button.draw(screen)
+        if shoot_delay > 0.2:
+            shoot_dela_b = shooting_delay_button.draw(screen)
         if shoot_dela_b and coins >= 5 and shoot_delay > 0.2:
             coins -=5
             shoot_delay = max(0.2, shoot_delay - 0.09) #tale max mi je ai predlagal in je kar dobra ideja, ker jaz sem hotel z if stavkom
             print(f"shoot delay = {shoot_delay}")
-            time.sleep(0.5) #omogoči da player ne kupi več upgrade-ov naenkrat ponesreci
+            time.sleep(0.3) #omogoči da player ne kupi več upgrade-ov naenkrat ponesreci
         
-        damage_b = damage_button.draw(screen)
-        if damage_b and coins >= 5 and damage_b < 5:
+        if top.damage < 5:
+            damage_b = damage_button.draw(screen)
+        if damage_b and coins >= 5 and top.damage < 5:
             coins -= 5
             top.damage = min(5, top.damage + 0.5)
             print(f"top damage = {top.damage}")
-            time.sleep(0.5)
+            time.sleep(0.3)
         
         reset_health_b = health_button.draw(screen)
         if reset_health_b and coins >= 10:
@@ -302,6 +305,7 @@ while running:
             h_bar.reset()
             top.health_points = top_health
             print(f"top health = {top.health_points}")
+            time.sleep(0.3)
 
         exit_shop_b = exit_shop_button.draw(screen)
         if exit_shop_b:
