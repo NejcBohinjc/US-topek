@@ -89,6 +89,10 @@ damage_text = font.render("Damage (5)", True, (255, 255, 255))
 damage_text_x, damage_text_y = 500, 75
 damage_button = Button.button(damage_text_x + 15, damage_text_y + 50,"sprites/buy_button.jpg",100,55)
 
+health_text = font.render("Reset Health (10)", True, (255, 255, 255))
+health_text_x, health_text_y = 730, 75
+health_button = Button.button(health_text_x + 65, health_text_y + 50,"sprites/buy_button.jpg",100,55)
+
 
 #UI components
 game_over_play_again_button = Button.button(425,190,"sprites/play_button.jpg",190,100)
@@ -108,6 +112,7 @@ def reset_game():
     wave_count = 0
     coins = 0
     shoot_delay = 0.5
+    top.damage = 1
     new_wave()
     h_bar.reset()
 
@@ -275,6 +280,7 @@ while running:
         screen.blit(coin_text, (coin_text_x,coin_text_y))
         screen.blit(shooting_delay_text, (shooting_delay_text_x,shooting_delay_text_y))
         screen.blit(damage_text, (damage_text_x, damage_text_y))
+        screen.blit(health_text, (health_text_x,health_text_y))
         
         shoot_dela_b = shooting_delay_button.draw(screen)
         if shoot_dela_b and coins >= 5 and shoot_delay > 0.2:
@@ -289,6 +295,13 @@ while running:
             top.damage = min(5, top.damage + 0.5)
             print(f"top damage = {top.damage}")
             time.sleep(0.5)
+        
+        reset_health_b = health_button.draw(screen)
+        if reset_health_b and coins >= 10:
+            coins -= 10
+            h_bar.reset()
+            top.health_points = top_health
+            print(f"top health = {top.health_points}")
 
         exit_shop_b = exit_shop_button.draw(screen)
         if exit_shop_b:
