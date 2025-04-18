@@ -32,8 +32,5 @@ class Bullet:
     def off_screen(self,width,height):
         return self.x < 0 or self.x > width or self.y < 0 or self.y > height
 
-    
-    def check_collisions(self,other_rect):
-        return self.rect.colliderect(other_rect)
 
 

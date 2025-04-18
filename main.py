@@ -58,7 +58,7 @@ min_spawn_delay = 0.5
 enemy_types = [
     {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2, "damage": 3, "weight" : 3, "health_points": 1},
     {"class": enemy_script.Enemy_fast_weak, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 2.5, "damage": 1.25, "weight": 4, "health_points": 1},
-    {"class": enemy_script.Enemy_slow_strong, "sprite": "sprites/enemy_slow_strong.png", "speed": 1, "damage": 5, "weight": 3, "health_points": 1}
+    {"class": enemy_script.Enemy_slow_strong, "sprite": "sprites/enemy_slow_strong.png", "speed": 1, "damage": 5, "weight": 3, "health_points": 2}
 ]
 
 
@@ -160,7 +160,7 @@ while running:
                     top.shoot()
         
         #spawnanje + setup enemy-ov
-        if current_time - time_at_enemy_spawn > enemy_spawn_delay and game_state == "gameplay":
+        if current_time - time_at_enemy_spawn > enemy_spawn_delay:
             time_at_enemy_spawn = current_time
             
             if spawned_enemies < len(enemies_to_spawn):
@@ -168,7 +168,7 @@ while running:
                 enemies_list.append(new_enemy)
                 spawned_enemies +=1
         
-        if enemies_killed >= enemy_count and game_state == "gameplay":
+        if enemies_killed >= enemy_count:
             game_state = "gameplay_pause"
         
         #preveri collisione za vsakega enemy-a v listu , če collide-a s top-om
@@ -277,14 +277,19 @@ while running:
         screen.blit(damage_text, (damage_text_x, damage_text_y))
         
         shoot_dela_b = shooting_delay_button.draw(screen)
-        if shoot_dela_b and coins >= 5 and shoot_delay >= 0.1:
+        if shoot_dela_b and coins >= 5 and shoot_delay > 0.2:
             coins -=5
-            shoot_delay = max(0.1, shoot_delay - 0.09)
+            shoot_delay = max(0.2, shoot_delay - 0.09) #tale max mi je ai predlagal in je kar dobra ideja, ker jaz sem hotel z if stavkom
             print(f"shoot delay = {shoot_delay}")
-            time.sleep(0.5)
+            time.sleep(0.5) #omogoči da player ne kupi več upgrade-ov naenkrat ponesreci
         
         damage_b = damage_button.draw(screen)
-        
+        if damage_b and coins >= 5 and damage_b < 5:
+            coins -= 5
+            top.damage = min(5, top.damage + 0.5)
+            print(f"top damage = {top.damage}")
+            time.sleep(0.5)
+
         exit_shop_b = exit_shop_button.draw(screen)
         if exit_shop_b:
             game_state = "gameplay_pause"
