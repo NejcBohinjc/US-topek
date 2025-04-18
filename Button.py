@@ -13,7 +13,7 @@ class button:
         #get mouse pos
         mouse_pos = pygame.mouse.get_pos()
         
-        #check if rect is colliding with mouse_pos
+        #preverimo če rect gumba collide-a z pozicijo miške
         if self.rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0] == 1:
             clicked = True
             

@@ -65,6 +65,7 @@ class Enemy:
         
 #2. enemy po težavnosti
 #podeduje Enemy
+#ai mi je pomagal spisai dedovanje za enemy-a
 class Enemy_fast_weak(Enemy):
     def __init__(self, enemy_sprite, speed, damage,weight,health_points):
         super().__init__(enemy_sprite, speed, damage,weight,health_points)
