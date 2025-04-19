@@ -29,6 +29,7 @@ class Bullet:
     def draw(self,screen):
         pygame.draw.circle(screen,self.color,(self.x,self.y),self.radius,0) #screen, barva, center, premer, debelina črte okrog
 
+    #preverimo če je šla dol iz screen-a
     def off_screen(self,width,height):
         return self.x < 0 or self.x > width or self.y < 0 or self.y > height
 
