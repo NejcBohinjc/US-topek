@@ -56,9 +56,9 @@ class Enemy:
     
     def update(self):
         #tole mi je ai predlagal, ker nisem vedel kako naj naredim da grejo enmy-i proti centru
-        #kodo sem prilagodil z drugimi imeni spremenljivk, -70 kot primerno velikost playerja
-        distance_x = config.player_x - 70 - self.x
-        distance_y = config.player_y - 70 - self.y
+        #kodo sem prilagodil z drugimi imeni spremenljivk, -50 ter -25 kot primerno velikost playerja (50 je polovica x, 25 je polovica y playerja)
+        distance_x = config.player_x - 50 - self.x
+        distance_y = config.player_y - 25 - self.y
 
         distance = math.sqrt(distance_x**2 + distance_y**2) # pitagorov izrek za izračun razdalje enemy-a in playerja
 
@@ -66,6 +66,7 @@ class Enemy:
             self.x += (distance_x / distance) * self.speed
             self.y += (distance_y / distance) * self.speed
         
+        #premika hitbox enemy-a skupaj ko se premika enemy
         self.enemy_rect.topleft = (self.x + (self.hitbox_width - self.enemy_rect.width) // 2, 
                                    self.y + (self.hitbox_height - self.enemy_rect.height) // 2)
         
