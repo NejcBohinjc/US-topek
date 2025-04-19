@@ -7,7 +7,6 @@ import enemy_script
 import random
 import Button
 import health_bar
-#test
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -56,8 +55,8 @@ min_spawn_delay = 0.8
 
 
 enemy_types = [
-    {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 2, "damage": 2.25, "weight" : 3, "health_points": 1},
-    {"class": enemy_script.Enemy_fast_weak, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 1.75, "damage": 1.25, "weight": 4, "health_points": 1},
+    {"class": enemy_script.Enemy, "sprite": "sprites/enemy_skull_sprite.png", "speed": 1.4, "damage": 2.25, "weight" : 3, "health_points": 1},
+    {"class": enemy_script.Enemy_fast_weak, "sprite": "sprites/2_enemy_skull_sprite.png", "speed": 1.8, "damage": 1.25, "weight": 4, "health_points": 1},
     {"class": enemy_script.Enemy_slow_strong, "sprite": "sprites/enemy_slow_strong.png", "speed": 1, "damage": 5, "weight": 3, "health_points": 2}
 ]
 
