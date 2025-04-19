@@ -26,8 +26,8 @@ pygame.display.flip()
 
 #vsi objekti v igri
 top_health = 10
-top_damage = 1
-top = topek_script.Top("#000000",100,50,top_health,top_damage)
+top_start_damage = 1
+top = topek_script.Top("#000000",100,50,top_health,top_start_damage)
 barbed_wire = pygame.image.load("sprites/barbed_wire.png").convert_alpha()
 barbed_wire = pygame.transform.scale(barbed_wire, (150,110))
 h_bar = health_bar.HealthBar(top.health_points)
