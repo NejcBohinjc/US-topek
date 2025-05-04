@@ -1,4 +1,4 @@
-#tukaj mi je chatgpt malo pomagal, ker sta se mi bara narobo prikazovala
+#tukaj mi je chatgpt malo pomagal, ker sta se mi bar-a narobe prikazovala
 import pygame
 import config
 

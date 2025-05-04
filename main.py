@@ -120,13 +120,13 @@ def new_wave():
     enemy_count += new_enemies_per_wave
     wave_count += 1
     enemies_killed = 0
-    enemy_spawn_delay = max(min_spawn_delay, enemy_spawn_delay - enemy_spawn_delay_deduction)
-    print(enemy_spawn_delay)
+    enemy_spawn_delay = max(min_spawn_delay, enemy_spawn_delay - enemy_spawn_delay_deduction) #če gre delay slučajno pod minimalno vrednost delaya, izberemo max (kar je v tem primeru minimalni delay)
+    #print(enemy_spawn_delay)
 
-    print(f"this is wave {wave_count}")
-    print(f"enemies to kill {enemy_count}")
+    #print(f"this is wave {wave_count}")
+    #print(f"enemies to kill {enemy_count}")
 
-    #tukaj generiramo list enemiov za vsak wave, ne spawnamo jih sproti. To idejo sem dobil sam, vendar sem uporabil aI da mi je to idejo pomagal spremeniti v kodo.
+    #tukaj generiramo list enemiov za vsak wave, ne spawnamo jih sproti. To idejo sem dobil sam, vendar sem uporabil AI da mi je to idejo pomagal spremeniti v kodo.
     for _ in range(enemy_count):
         selected = random.choices(enemy_types, weights=[enemy["weight"] for enemy in enemy_types], k=1)[0] #k=1: vrni list z enim elementom, [0]: iz tega lista izberi prvi ele
         #novega enemy-a v zogrnji vrstici izberemo z random choices na podlagi weights, ter new-enemy nastavimo na selected in vse njegove atribute nastavimo
@@ -134,7 +134,7 @@ def new_wave():
         enemies_to_spawn.append(new_enemy)
 
 
-print(f"start of wave {wave_count}")
+#print(f"start of wave {wave_count}")
 while running:
     current_time = time.time()
     for event in pygame.event.get():
@@ -178,31 +178,30 @@ while running:
                 enemies_list.remove(enemy)
                 enemies_killed += 1
                 h_bar.lower(enemy.damage)
-                print(f'enemies eliminated {enemies_killed}')
+                #print(f'enemies eliminated {enemies_killed}')
 
                 
                 #lower top hp
                 top.health_points -= enemy.damage
-                print(top.health_points)
+                #print(top.health_points)
                 if top.health_points <= 0:
                     game_state = "game_over_menu"
         
+        #preverimo če bullet zadane enemy-a
         for bullet in top.bullets[:]:
             for enemy in enemies_list[:]:
                 if bullet.rect.colliderect(enemy.enemy_rect):
-                    #print("hit")
-                    #dodaj da gre bullet lahko čez, če imaš nek upgrade
                     
-                    top.bullets.remove(bullet)
+                    top.bullets.remove(bullet) #damo bullet stran iz lista
                     enemy.health_points -= top.damage
                     if enemy.health_points <= 0:
                         enemies_list.remove(enemy)
                         enemies_killed += 1
                         coins += 1
-                        print(f"coin c: {coins}")
-                        print(f'enemies eliminated {enemies_killed}')
+                        #print(f"coin c: {coins}")
+                        #print(f'enemies eliminated {enemies_killed}')
 
-                    break
+                    break #če se zadane v enemy-a gremo ven, saj ne rabimo več preverjati collison-ov za ta bullet, ker se uniči
 
 
 
@@ -221,7 +220,7 @@ while running:
             enemy.spawn(screen)
             enemy.update()
         
-        """DEBUGGING
+        """ DEBUGGING
         pygame.draw.rect(screen, (255, 0, 0), top.rect, 2)
         for enemy in enemies_list:
             pygame.draw.rect(screen, (0, 255, 0), enemy.enemy_rect, 2)
@@ -246,7 +245,7 @@ while running:
                     top.shoot()
         
         screen.fill(background_colour) #sproti nam riše ozadje in nam zato briše sled topa
-        start_called = start_wave_button.draw(screen)
+        start_called = start_wave_button.draw(screen) #draw funkcija (v vsakem gumbu) nam vrne True če je bil gum pritisnjen
         shop_called = shop_button.draw(screen)
 
 
@@ -255,7 +254,6 @@ while running:
             #print("start of wave called")
             #print(f'{enemy_count} - {enemies_killed} = {enemy_count - enemies_killed}')
             new_wave()
-            game_state = "gameplay"
         if shop_called:
             game_state = "shop"
         
