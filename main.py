@@ -1,6 +1,5 @@
 import pygame
 import topek_script
-import bullet_script
 import time
 import config
 import enemy_script
@@ -31,7 +30,7 @@ barbed_wire = pygame.image.load("sprites/barbed_wire.png").convert_alpha()
 barbed_wire = pygame.transform.scale(barbed_wire, (150,110))
 h_bar = health_bar.HealthBar(top.health_points)
 
-#nastavitve topa
+#inicializiramo nastavitve topa. Potem se nastavijo v reset_game funkciji
 shoot_delay = 0
 time_at_shoot = 0
 coins = 0
@@ -39,15 +38,14 @@ coins = 0
 #enemy nastavitve
 time_at_enemy_spawn = 0
 enemies_list = list()
-time_at_enemy_spawn = 0
 enemy_spawn_delay = 1.6
-enemies_to_spawn = []
+enemies_to_spawn = [] #ta list napolnemo v new_wave funkciji z enemy-ji
 spawned_enemies = 0
 
 #wave
 wave_count = 0
 wave_start_time = time.time()
-enemy_count = 5
+enemy_count = 0
 enemies_killed = 0
 new_enemies_per_wave = 3
 enemy_spawn_delay_deduction = 0.1
@@ -60,11 +58,7 @@ enemy_types = [
     {"class": enemy_script.Enemy_slow_strong, "sprite": "sprites/enemy_slow_strong.png", "speed": 1, "damage": 5, "weight": 3, "health_points": 2}
 ]
 
-
-#bullet
-bullet_list = list()
-
-#game states (gameplay,gameplay_pause,main_menu,game_over_menu,shop)
+#game state (gameplay,gameplay_pause,main_menu,game_over_menu,shop)
 game_state = "main_menu"
 
 #text settings
@@ -80,6 +74,7 @@ main_menu_text_y = 135
 coin_text_x = 10
 coin_text_y = 10
 
+#shop gumbi
 shooting_delay_text = font.render("Faster shooting (5)", True, (255, 255, 255))
 shooting_delay_text_x, shooting_delay_text_y = 100, 75
 shooting_delay_button = Button.button(shooting_delay_text_x + 70, shooting_delay_text_y + 50,"sprites/buy_button.jpg",100,55)
@@ -93,7 +88,7 @@ health_text_x, health_text_y = 730, 75
 health_button = Button.button(health_text_x + 65, health_text_y + 50,"sprites/buy_button.jpg",100,55)
 
 
-#UI components
+#ostali gumbi
 game_over_play_again_button = Button.button(425,190,"sprites/play_button.jpg",190,100)
 main_menu_button = Button.button(425,300,"sprites/main_menu_button.jpg",190,100)
 main_menu_play_button = Button.button(425,190,"sprites/play_button.jpg",190,100)
@@ -101,6 +96,7 @@ start_wave_button = Button.button(30,500,"sprites/start_wave_button.jpg",100,55)
 shop_button = Button.button(30,425,"sprites/shop_button.jpg",100,55)
 exit_shop_button = Button.button(900,530,"sprites/exit_button.jpg",100,55)
 
+#izvši se ob vsakem začetku igre
 def reset_game():
     global time_at_enemy_spawn, enemy_count, wave_count, coins, shoot_delay #vprašal sem chatgpt katere spremenljivke naj bodo globalne
     top.health_points = top_health
@@ -113,7 +109,7 @@ def reset_game():
     shoot_delay = 0.5
     top.damage = 1
     new_wave()
-    h_bar.reset()
+    h_bar.reset() #resetiramo health topa (in s tem izgled health bar-a)
 
 def new_wave():
     global enemies_to_spawn, spawned_enemies, game_state, enemy_count, wave_count, enemies_killed, enemy_spawn_delay
@@ -121,7 +117,7 @@ def new_wave():
     enemies_list.clear()
     enemies_to_spawn.clear()
     spawned_enemies = 0
-    enemy_count += 3
+    enemy_count += new_enemies_per_wave
     wave_count += 1
     enemies_killed = 0
     enemy_spawn_delay = max(min_spawn_delay, enemy_spawn_delay - enemy_spawn_delay_deduction)
@@ -132,8 +128,7 @@ def new_wave():
 
     #tukaj generiramo list enemiov za vsak wave, ne spawnamo jih sproti. To idejo sem dobil sam, vendar sem uporabil aI da mi je to idejo pomagal spremeniti v kodo.
     for _ in range(enemy_count):
-        #k=1: vrni list z enim elementom, [0]: iz tega lista izberi prvi ele
-        selected = random.choices(enemy_types, weights=[enemy["weight"] for enemy in enemy_types], k=1)[0]
+        selected = random.choices(enemy_types, weights=[enemy["weight"] for enemy in enemy_types], k=1)[0] #k=1: vrni list z enim elementom, [0]: iz tega lista izberi prvi ele
         #novega enemy-a v zogrnji vrstici izberemo z random choices na podlagi weights, ter new-enemy nastavimo na selected in vse njegove atribute nastavimo
         new_enemy = selected["class"](selected["sprite"], selected["speed"], selected["damage"], selected["weight"], selected["health_points"])
         enemies_to_spawn.append(new_enemy)

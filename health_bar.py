@@ -23,5 +23,6 @@ class  HealthBar:
     def lower(self, damage):
         self.health -= damage
     
+    #self.bar_size je vedno enak začetnemu healthu (se ne znižuje), zato lahko self.health resetiramo tako, da ga nastavimo na self.bar_size
     def reset(self):
         self.health = self.bar_size
